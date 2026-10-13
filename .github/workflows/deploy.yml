@@ -24,10 +24,6 @@ jobs:
         uses: withastro/action@v6
         with:
           node-version: 24
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./dist
 
   deploy:
     environment:
