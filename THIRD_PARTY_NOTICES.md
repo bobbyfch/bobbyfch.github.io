@@ -2,4 +2,4 @@
 
 ## Platform icons
 
-The files in `public/brand-icons/` are local copies of icon assets served by the services' own websites or official static asset hosts: Spotify, Apple Music, YouTube, YouTube Music, Instagram, TikTok, Facebook, Threads, SoundCloud, and Amazon Music. Service names and marks are trademarks of their respective owners.
+The files in `public/brand-icons/` are local copies of platform-provided icons and favicons: Spotify, Apple Music, YouTube, YouTube Music, Audiomack, SoundCloud, Amazon Music, TIDAL, Instagram, TikTok, Facebook, and Threads. Service names and marks are trademarks of their respective owners.
