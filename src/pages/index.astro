@@ -13,26 +13,9 @@ const streaming = [
 
 const releases = [
   {
-    title: "Anahata",
-    detail: "Album · 2026",
-    image: "/albums/anahata.jpg",
-    links: [
-      { name: "Spotify", href: "https://open.spotify.com/album/6NLGRRITjG1iuZdxcnC3Ea", icon: "/vendor/webicons/webicon-spotify.svg" },
-      { name: "Apple Music", href: "https://music.apple.com/id/album/anahata/6766773389", icon: "/vendor/webicons/webicon-apple.svg" },
-      { name: "Audiomack", href: "https://audiomack.com/limaraya/album/anahata", mark: "AM" },
-      { name: "TIDAL", href: "https://tidal.com/album/521540384", mark: "T" },
-      { name: "Amazon Music", href: "https://music.amazon.com/albums/B0GZHZB464", mark: "AMZ" },
-    ],
-    embeds: [
-      { name: "Spotify", src: "https://open.spotify.com/embed/album/6NLGRRITjG1iuZdxcnC3Ea?utm_source=generator", height: 352, icon: "/vendor/webicons/webicon-spotify.svg" },
-      { name: "Apple Music", src: "https://embed.music.apple.com/id/album/anahata/6766773389", height: 450, icon: "/vendor/webicons/webicon-apple.svg" },
-      { name: "Audiomack", src: "https://audiomack.com/embed/album/limaraya/anahata", height: 400, mark: "AM" },
-      { name: "TIDAL", src: "https://embed.tidal.com/albums/521540384?layout=gridify", height: 275, mark: "T" },
-    ],
-  },
-  {
+    number: "01",
     title: "Spektrum Rasa",
-    detail: "Album · 2025",
+    detail: "Album pertama · 2025",
     image: "/albums/spektrum-rasa.jpg",
     links: [
       { name: "Spotify", href: "https://open.spotify.com/album/6klR0U5CBaWT7oXIN2z9OH", icon: "/vendor/webicons/webicon-spotify.svg" },
@@ -46,6 +29,25 @@ const releases = [
       { name: "Apple Music", src: "https://embed.music.apple.com/id/album/spektrum-rasa/6809280279", height: 450, icon: "/vendor/webicons/webicon-apple.svg" },
       { name: "Audiomack", src: "https://audiomack.com/embed/album/limaraya/spektrum-rasa-2", height: 400, mark: "AM" },
       { name: "TIDAL", src: "https://embed.tidal.com/albums/559190896?layout=gridify", height: 275, mark: "T" },
+    ],
+  },
+  {
+    number: "02",
+    title: "Anahata",
+    detail: "Album kedua · 2026",
+    image: "/albums/anahata.jpg",
+    links: [
+      { name: "Spotify", href: "https://open.spotify.com/album/6NLGRRITjG1iuZdxcnC3Ea", icon: "/vendor/webicons/webicon-spotify.svg" },
+      { name: "Apple Music", href: "https://music.apple.com/id/album/anahata/6766773389", icon: "/vendor/webicons/webicon-apple.svg" },
+      { name: "Audiomack", href: "https://audiomack.com/limaraya/album/anahata", mark: "AM" },
+      { name: "TIDAL", href: "https://tidal.com/album/521540384", mark: "T" },
+      { name: "Amazon Music", href: "https://music.amazon.com/albums/B0GZHZB464", mark: "AMZ" },
+    ],
+    embeds: [
+      { name: "Spotify", src: "https://open.spotify.com/embed/album/6NLGRRITjG1iuZdxcnC3Ea?utm_source=generator", height: 352, icon: "/vendor/webicons/webicon-spotify.svg" },
+      { name: "Apple Music", src: "https://embed.music.apple.com/id/album/anahata/6766773389", height: 450, icon: "/vendor/webicons/webicon-apple.svg" },
+      { name: "Audiomack", src: "https://audiomack.com/embed/album/limaraya/anahata", height: 400, mark: "AM" },
+      { name: "TIDAL", src: "https://embed.tidal.com/albums/521540384?layout=gridify", height: 275, mark: "T" },
     ],
   },
 ];
@@ -126,52 +128,48 @@ const morePlayers = [
     </header>
 
     <main id="top" class="page-shell pb-16 sm:pb-24">
-      <section class="hero-stage grid items-center lg:grid-cols-[1.08fr_.92fr]" aria-labelledby="hero-title">
-        <div class="relative z-10 px-7 pb-2 pt-10 sm:px-12 sm:py-14 lg:py-20">
-          <p class="eyebrow mb-5 inline-flex items-center gap-2">
-            <span class="size-2 rounded-full bg-[var(--accent)]" aria-hidden="true"></span>
-            Musik dari Yogyakarta
-          </p>
-          <h1 id="hero-title" class="max-w-[570px] text-[clamp(3.2rem,7.5vw,6.4rem)] font-semibold leading-[.96] tracking-[-.075em]">
-            Lima suara,<br /><span class="text-[var(--accent)]">satu cerita.</span>
-          </h1>
-          <p class="mt-6 max-w-[460px] text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
-            Aluna, Kirana, Keira, Tanaya, dan Sarah. Bercerita di antara kota, hati, dan raya.
-          </p>
-          <div class="mt-8 flex flex-wrap items-center gap-3">
-            <a class="focus-ring inline-flex min-h-12 items-center gap-3 rounded-full bg-[var(--accent)] px-6 text-sm font-bold text-[var(--accent-ink)] shadow-sm transition hover:-translate-y-0.5" href="https://music.apple.com/id/album/anahata/6766773389" target="_blank" rel="noreferrer noopener">
-              <span aria-hidden="true">▶</span> Dengarkan Anahata
+      <section class="hero-stage" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow hero-kicker">Indie pop &amp; R&amp;B <span aria-hidden="true">/</span> Yogyakarta</p>
+          <h1 id="hero-title" class="hero-title">Lima suara,<br /><em>satu cerita.</em></h1>
+          <p class="hero-description">Dua album Limaraya: <i>Spektrum Rasa</i> dan <i>Anahata</i>. Dengarkan lewat platform pilihanmu.</p>
+          <div class="hero-actions">
+            <a class="hero-listen focus-ring" href="https://open.spotify.com/album/6NLGRRITjG1iuZdxcnC3Ea" target="_blank" rel="noreferrer noopener">
+              <span class="hero-play" aria-hidden="true">▶</span> Dengarkan Anahata
             </a>
-            <a class="focus-ring inline-flex min-h-12 items-center gap-2 rounded-full px-4 text-sm font-bold text-[var(--ink)] transition hover:text-[var(--accent)]" href="#musik">
-              Jelajahi musik <span aria-hidden="true">↘</span>
-            </a>
+            <a class="hero-link focus-ring" href="#musik">Semua platform <span aria-hidden="true">↘</span></a>
           </div>
-          <div class="mt-9 flex items-center gap-3 text-xs font-semibold text-[var(--muted)]">
-            <span class="flex -space-x-2" aria-hidden="true">
-              <i class="size-7 rounded-full border-2 border-[var(--paper)] bg-[var(--art-rose)]"></i>
-              <i class="size-7 rounded-full border-2 border-[var(--paper)] bg-[var(--art-slate)]"></i>
-              <i class="size-7 rounded-full border-2 border-[var(--paper)] bg-[var(--art-mist)]"></i>
-              <i class="size-7 rounded-full border-2 border-[var(--paper)] bg-[var(--art-night)]"></i>
-              <i class="size-7 rounded-full border-2 border-[var(--paper)] bg-[var(--art-blush)]"></i>
-            </span>
-            <span>Pop · persahabatan · cerita</span>
+          <div class="hero-signoff">
+            <img src="/albums/limaraya-spotify-profile.jpg" alt="" width="320" height="320" />
+            <span>Limaraya <span aria-hidden="true">·</span> Yogyakarta, Indonesia</span>
           </div>
         </div>
 
-        <figure class="hero-portrait">
-          <img src="/albums/limaraya-spotify-profile.jpg" alt="Lima anggota Limaraya, foto profil resmi Spotify" width="320" height="320" fetchpriority="high" />
-          <figcaption class="portrait-caption">LIMARAYA <span aria-hidden="true">·</span> YOGYAKARTA</figcaption>
-        </figure>
+        <div class="hero-artwork" aria-label="Sampul dua album Limaraya">
+          <figure class="hero-cover hero-cover--first">
+            <a href="https://open.spotify.com/album/6klR0U5CBaWT7oXIN2z9OH" target="_blank" rel="noreferrer noopener" aria-label="Buka album pertama Spektrum Rasa di Spotify">
+              <img src="/albums/spektrum-rasa.jpg" alt="Sampul asli album Spektrum Rasa" width="1200" height="1200" fetchpriority="high" />
+              <figcaption><span>01</span><span>Spektrum Rasa</span></figcaption>
+            </a>
+          </figure>
+          <figure class="hero-cover hero-cover--second">
+            <a href="https://open.spotify.com/album/6NLGRRITjG1iuZdxcnC3Ea" target="_blank" rel="noreferrer noopener" aria-label="Buka album kedua Anahata di Spotify">
+              <img src="/albums/anahata.jpg" alt="Sampul asli album Anahata" width="1200" height="1200" />
+              <figcaption><span>02</span><span>Anahata</span></figcaption>
+            </a>
+          </figure>
+          <span class="hero-art-note" aria-hidden="true">ALBUM / 2025—2026</span>
+        </div>
       </section>
 
       <section id="cerita" class="grid gap-6 py-20 sm:grid-cols-[.7fr_1.3fr] sm:items-end sm:py-28" aria-labelledby="story-title">
         <div>
           <p class="eyebrow mb-4">Tentang Limaraya</p>
-          <h2 id="story-title" class="max-w-md text-4xl font-semibold leading-[1.06] tracking-[-.055em] sm:text-5xl">Lagu yang terasa seperti pulang.</h2>
+          <h2 id="story-title" class="max-w-md text-4xl font-semibold leading-[1.06] tracking-[-.055em] sm:text-5xl">Indie pop dan R&amp;B dari Yogyakarta.</h2>
         </div>
         <div class="max-w-xl sm:justify-self-end">
-          <p class="text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">Lima teman, lima warna suara, dan satu ruang untuk tumbuh bersama. Dari Yogyakarta, Limaraya merangkai kisah sehari-hari jadi pop yang hangat dan dekat.</p>
-          <p class="mt-4 text-sm font-semibold text-[var(--ink)]">Aluna <span class="mx-1 text-[var(--accent)]">·</span> Kirana <span class="mx-1 text-[var(--accent)]">·</span> Keira <span class="mx-1 text-[var(--accent)]">·</span> Tanaya <span class="mx-1 text-[var(--accent)]">·</span> Sarah</p>
+          <p class="text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">Berangkat dari ruang rumah dan percakapan sehari-hari, Limaraya menulis lagu tentang hal-hal yang dekat—dengan ruang untuk jeda, rasa, dan tafsir.</p>
+          <p class="story-caption">CATATAN MUSIK <span aria-hidden="true">·</span> YOGYAKARTA</p>
         </div>
       </section>
 
@@ -211,14 +209,18 @@ const morePlayers = [
             <h2 id="release-title" class="text-3xl font-semibold tracking-[-.055em] sm:text-4xl">Dua album, satu dunia.</h2>
           </div>
         </div>
-        <div class="grid gap-4 md:grid-cols-2">
+        <div class="release-list">
           {releases.map((release) => (
-            <article class="release-card p-4 sm:p-5">
-              <img class="release-cover" src={release.image} alt={`Cover album resmi ${release.title} oleh Limaraya`} loading="lazy" width="1200" height="1200" />
+            <article class={`release-card ${release.number === "02" ? "release-card--reverse" : ""}`}>
+              <span class="release-number" aria-hidden="true">{release.number}</span>
+              <figure class="release-art">
+                <img class="release-cover" src={release.image} alt={`Sampul asli album ${release.title} oleh Limaraya`} loading="lazy" width="1200" height="1200" />
+                <figcaption class="release-art-caption">LIMARAYA <span aria-hidden="true">/</span> SAMPUL ALBUM</figcaption>
+              </figure>
               <div class="release-content">
-                <span class="eyebrow">{release.detail}</span>
-                <h3 class="mt-2 text-3xl font-semibold tracking-[-.05em]">{release.title}</h3>
-                <p class="mt-2 text-sm text-[var(--muted)]">Cover asli dari katalog resmi Limaraya.</p>
+                <span class="eyebrow release-detail">{release.detail}</span>
+                <h3 class="release-title">{release.title}</h3>
+                <p class="release-note">Sampul dan pemutar dari rilisan resmi Limaraya.</p>
                 <div class="release-links mt-4" aria-label={`Tautan ${release.title}`}>
                   {release.links.map((service) => (
                     <a class="release-service-link focus-ring" href={service.href} target="_blank" rel="noreferrer noopener">
@@ -296,11 +298,15 @@ const morePlayers = [
         </div>
       </section>
 
-      <section class="coming-panel relative mt-20 overflow-hidden rounded-[30px] border border-[var(--line)] px-7 py-11 text-center sm:mt-24 sm:rounded-[36px] sm:px-12 sm:py-16" aria-labelledby="coming-title">
-        <span class="eyebrow relative z-10">Ruang ini masih tumbuh</span>
-        <h2 id="coming-title" class="relative z-10 mt-4 text-4xl font-semibold tracking-[-.06em] sm:text-5xl">More coming soon<span class="text-[var(--accent)]">.</span></h2>
-        <p class="relative z-10 mx-auto mt-4 max-w-lg text-sm leading-6 text-[var(--muted)] sm:text-base sm:leading-7">Kisah berikutnya sedang kami siapkan. Sampai saat itu, mari dengarkan yang sudah ada.</p>
-        <a class="focus-ring relative z-10 mt-7 inline-flex min-h-12 items-center gap-3 rounded-full border border-[var(--line)] bg-[var(--paper)] px-6 text-sm font-bold shadow-sm transition hover:-translate-y-0.5" href="https://linktr.ee/limaraya" target="_blank" rel="noreferrer noopener">Temukan semua tautan <span class="text-[var(--accent)]" aria-hidden="true">↗</span></a>
+      <section class="coming-panel" aria-labelledby="coming-title">
+        <div>
+          <span class="eyebrow">Ruang ini masih tumbuh</span>
+          <h2 id="coming-title">More coming<br /><em>soon.</em></h2>
+        </div>
+        <div>
+          <p>Kabar berikutnya menyusul. Untuk sekarang, temui Limaraya dan dengarkan dua album yang sudah ada.</p>
+          <a class="focus-ring inline-flex min-h-12 items-center gap-3 border border-[var(--line)] bg-[var(--paper)] px-5 text-sm font-bold transition hover:-translate-y-0.5" href="https://linktr.ee/limaraya" target="_blank" rel="noreferrer noopener">Semua tautan Limaraya <span class="text-[var(--accent)]" aria-hidden="true">↗</span></a>
+        </div>
       </section>
     </main>
 
