@@ -15,4 +15,4 @@ Create the production files with `npm run build`; Astro writes them to `dist/`.
 
 Pushing to `main` runs the GitHub Pages workflow in `.github/workflows/deploy.yml`. The workflow builds the static site and deploys the `dist/` output.
 
-There is no custom-domain configuration yet. When a domain is ready, update `site` in `astro.config.mjs`, add the domain's DNS records, and configure that domain in the eventual hosting provider.
+There is no custom-domain configuration yet. The site is fully static, so it can move to Cloudflare Pages later without changing the app: connect this repository, run `npm run build`, and publish `dist/`. When a domain is ready, update `site` in `astro.config.mjs` and add the domain's DNS records in Cloudflare.
