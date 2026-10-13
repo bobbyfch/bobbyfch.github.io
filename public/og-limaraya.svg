@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#fbf7ef"/>
+  <circle cx="936" cy="306" r="218" fill="#f5c95d"/>
+  <circle cx="936" cy="306" r="153" fill="#e85c4a"/>
+  <circle cx="936" cy="306" r="91" fill="#fff8ed"/>
+  <circle cx="1090" cy="170" r="26" fill="#82a884"/>
+  <circle cx="788" cy="444" r="18" fill="#8298c2"/>
+  <text x="108" y="154" fill="#45604a" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="6">YOGYAKARTA · INDONESIA</text>
+  <text x="100" y="328" fill="#302d2b" font-family="Arial, sans-serif" font-size="112" font-weight="700" letter-spacing="-5">LIMARAYA</text>
+  <text x="108" y="404" fill="#625e58" font-family="Arial, sans-serif" font-size="32">Lima suara, satu cerita.</text>
+  <text x="110" y="548" fill="#e85c4a" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="5">MUSIC · FRIENDSHIP · STORIES</text>
+</svg>
