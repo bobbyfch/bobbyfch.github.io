@@ -2,6 +2,10 @@
 
 The official Limaraya landing page, built as a static Astro site with Tailwind CSS 4. It is published at [bobbyfch.github.io](https://bobbyfch.github.io) through GitHub Pages.
 
+## Visual identity
+
+The site uses Limaraya's official [Spotify artist portrait](https://open.spotify.com/artist/0gTusXkU2Q2M0vKTy4LU6a) and [Apple Music artwork for Anahata](https://music.apple.com/id/album/anahata/6766773389) and [Spektrum Rasa](https://music.apple.com/id/album/spektrum-rasa/6809280279). The light and dark palettes are sampled from those images; album cards link to their Apple Music releases.
+
 ## Local development
 
 ```sh
