@@ -1,5 +1,5 @@
 # Third-party notices
 
-## Webicons
+## Platform icons
 
-The social and streaming marks in `public/vendor/webicons/` are a subset of [Webicons by Adam Fairhead / Fairhead Creative](https://github.com/adamfairhead/webicons). The upstream project identifies its icon artwork as Creative Commons Attribution (CC BY) and requests attribution to Fairhead Creative. The SVG artwork is served locally without modification.
+The files in `public/brand-icons/` are local copies of icon assets served by the services' own websites or official static asset hosts: Spotify, Apple Music, YouTube, YouTube Music, Instagram, TikTok, Facebook, Threads, SoundCloud, and Amazon Music. Service names and marks are trademarks of their respective owners.
