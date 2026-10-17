@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { ArrowDownRight, ArrowUpRight, AtSign, Briefcase, Camera, CodeXml, Disc3, Gamepad2, Moon, Palette, Play, Sparkles, Sun } from "@lucide/astro";
 
 const streaming = [
   { name: "Spotify", href: "https://open.spotify.com/artist/0gTusXkU2Q2M0vKTy4LU6a", note: "Ikuti perjalanan musik", icon: "/brand-icons/spotify.png" },
@@ -91,20 +92,20 @@ const morePlayers = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#D0D0D0" />
-    <meta name="description" content="Beranda Bobby Fajar Christian. Web developer, pembuat Sela, dan bagian dari Limaraya." />
+    <meta name="theme-color" content="#f3f7ff" />
+    <meta name="description" content="Bobby Fajar Christian — web developer dari Jakarta yang suka game, musik, seni, dan teknologi. Pembuat Sela dan bagian dari Limaraya." />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Bobby Fajar Christian" />
-    <meta property="og:description" content="Web developer, pembuat Sela, dan bagian dari Limaraya." />
+    <meta property="og:title" content="Bobby Fajar Christian — Karya, musik, dan hal yang kusukai" />
+    <meta property="og:description" content="Web developer dari Jakarta. Membangun Sela, berkarya bersama Limaraya, dan menjelajahi game, seni, serta teknologi." />
     <meta property="og:url" content="https://bobbyfch.github.io/" />
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="/bobby.svg" />
     <link rel="canonical" href="https://bobbyfch.github.io/" />
-    <title>Bobby Fajar Christian — Web Developer</title>
+    <title>Bobby Fajar Christian — Karya, musik, dan teknologi</title>
     <script is:inline>
       (() => {
         try {
-          const stored = localStorage.getItem("limaraya-theme");
+          const stored = localStorage.getItem("bobby-theme");
           const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
           document.documentElement.dataset.theme = stored || (prefersDark ? "dark" : "light");
         } catch {
@@ -114,204 +115,225 @@ const morePlayers = [
     </script>
   </head>
   <body class="min-h-screen bg-[var(--page)] text-[var(--ink)] antialiased">
-    <header class="page-shell flex flex-wrap items-center justify-between gap-x-6 gap-y-4 py-5 sm:py-7">
-      <a class="focus-ring inline-flex items-center gap-3 rounded-xl" href="#top" aria-label="Bobby Fajar Christian, ke bagian atas">
-        <span class="brand-monogram" aria-hidden="true">BF</span>
-        <span class="font-bold tracking-[0.08em]">BOBBY F. CHRISTIAN<span class="text-[var(--accent)]">.</span></span>
+    <a class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-[var(--paper)] focus:px-4 focus:py-3 focus:shadow-lg" href="#top">Lewati ke konten</a>
+    <header class="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-4 px-4 py-4 sm:px-6 sm:py-5 lg:px-8">
+      <a class="inline-flex min-h-11 items-center gap-3 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]" href="#top" aria-label="Bobby Fajar Christian, ke bagian atas">
+        <span class="grid size-10 place-items-center rounded-2xl bg-[var(--accent)] text-sm font-black tracking-tight text-[var(--accent-ink)] shadow-md shadow-blue-900/10">BF</span>
+        <span class="text-sm font-extrabold tracking-tight sm:text-base">Bobby Fajar<span class="text-[var(--accent)]">.</span></span>
       </a>
-      <nav class="order-3 flex w-full items-center justify-between gap-4 text-xs font-semibold sm:order-none sm:w-auto sm:justify-start sm:gap-7 sm:text-sm" aria-label="Navigasi utama">
-        <a class="header-link" href="#karya">Karya</a>
-        <a class="header-link" href="#limaraya">Limaraya</a>
-        <a class="header-link" href="#tentang">Tentang</a>
-        <a class="header-link" href="#sosial">Sosial</a>
+      <nav class="order-3 flex w-full items-center justify-between gap-3 text-sm font-semibold sm:order-none sm:w-auto sm:justify-start sm:gap-6" aria-label="Navigasi utama">
+        <a class="rounded-lg px-2 py-2 text-[var(--muted)] transition hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]" href="#karya">Karya</a>
+        <a class="rounded-lg px-2 py-2 text-[var(--muted)] transition hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]" href="#limaraya">Limaraya</a>
+        <a class="rounded-lg px-2 py-2 text-[var(--muted)] transition hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]" href="#tentang">Tentang</a>
+        <a class="rounded-lg px-2 py-2 text-[var(--muted)] transition hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]" href="#sosial">Sosial</a>
       </nav>
-      <button id="theme-toggle" class="focus-ring inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--paper)] px-4 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5" type="button" aria-pressed="false" aria-label="Ganti tema warna">
-        <svg id="theme-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>
-        </svg>
+      <button id="theme-toggle" class="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--paper)] px-3.5 text-sm font-semibold transition hover:-translate-y-0.5 hover:border-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]" type="button" aria-pressed="false" aria-label="Ganti tema warna">
+        <Sun class="size-4 dark:hidden" aria-hidden="true" />
+        <Moon class="hidden size-4 dark:block" aria-hidden="true" />
         <span id="theme-label">Tema</span>
       </button>
     </header>
 
-    <main id="top" class="page-shell pb-16 sm:pb-24">
-      <section id="tentang" class="profile-hero" aria-labelledby="hero-title">
-        <div class="profile-copy">
-          <p class="eyebrow">PORTOFOLIO PERSONAL <span aria-hidden="true">/</span> INDONESIA</p>
-          <h1 id="hero-title" class="profile-title">Bobby Fajar<br /><em>Christian.</em></h1>
-          <p class="profile-description">Web developer. Saya membangun <strong>Sela</strong> dan berkarya bersama <strong>Limaraya</strong>.</p>
-          <div class="hero-actions">
-            <a class="hero-listen focus-ring" href="#karya">Lihat karya <span aria-hidden="true">↘</span></a>
-            <a class="hero-link focus-ring" href="https://github.com/bobbyfch" target="_blank" rel="noreferrer noopener">GitHub <span aria-hidden="true">↗</span></a>
+    <main id="top" class="mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 sm:pb-24 lg:px-8">
+      <section id="tentang" class="grid scroll-mt-8 items-center gap-8 border-y border-[var(--line)] py-8 sm:gap-10 sm:py-12 md:grid-cols-[1fr_0.92fr] md:gap-8 lg:gap-14 lg:py-16" aria-labelledby="hero-title">
+        <div class="relative z-10 py-2 sm:py-5">
+          <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--paper)] px-3 py-1.5 text-xs font-bold tracking-wide text-[var(--muted)] shadow-sm">
+            <span class="size-2 rounded-full bg-[var(--coral)]" aria-hidden="true"></span> JAKARTA, INDONESIA
+          </p>
+          <h1 id="hero-title" class="max-w-3xl text-5xl font-black leading-[0.98] tracking-tighter sm:text-6xl lg:text-7xl xl:text-8xl">Halo, saya<br /><span class="text-[var(--accent)]">Bobby.</span></h1>
+          <p class="mt-6 max-w-xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">Web developer yang suka game, musik, seni, dan teknologi. Sekarang membangun <strong class="font-bold text-[var(--ink)]">Sela</strong> dan berkarya bersama <strong class="font-bold text-[var(--ink)]">Limaraya</strong>.</p>
+          <div class="mt-7 flex flex-wrap items-center gap-3">
+            <a class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-5 text-sm font-bold text-[var(--accent-ink)] shadow-lg shadow-blue-900/15 transition hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--accent)]" href="https://bobbyfch.github.io/sela/">Buka Sela <ArrowUpRight class="size-4" aria-hidden="true" /></a>
+            <a class="inline-flex min-h-12 items-center gap-2 rounded-xl px-4 text-sm font-bold text-[var(--muted)] transition hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--accent)]" href="#karya">Lihat karya <ArrowDownRight class="size-4" aria-hidden="true" /></a>
+          </div>
+          <div class="mt-8 flex flex-wrap gap-2 text-xs font-semibold text-[var(--muted)] sm:mt-10">
+            <span class="rounded-full bg-[var(--paper-soft)] px-3 py-1.5">Membangun hal berguna</span>
+            <span class="rounded-full bg-[var(--paper-soft)] px-3 py-1.5">Mendengar banyak musik</span>
+            <span class="rounded-full bg-[var(--paper-soft)] px-3 py-1.5">Selalu penasaran</span>
           </div>
         </div>
-        <div class="profile-art" aria-hidden="true">
-          <span class="profile-orbit profile-orbit--one"></span>
-          <span class="profile-orbit profile-orbit--two"></span>
-          <span class="profile-monogram">BF</span>
-          <span class="profile-art-caption">WEB · MUSIC · STORIES</span>
+        <figure class="relative isolate m-0 min-w-0 overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--paper-soft)] shadow-xl">
+          <img class="block aspect-auto min-h-72 w-full object-cover sm:min-h-80 md:aspect-square md:min-h-0 object-[67%_center] " src="/art/jakarta-reading-corner.webp" alt="Ilustrasi suasana membaca ceria di Jakarta dengan karakter dan teman hewan bergaya anime" width="2172" height="724" fetchpriority="high" />
+          <figcaption class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-slate-950/70 to-transparent px-5 pb-5 pt-16 text-white sm:px-6 sm:pb-6">
+            <span class="text-xs font-bold tracking-widest">JAKARTA <span class="text-cyan-200">/</span> CERITA &amp; BACAAN</span>
+            <span class="grid size-10 shrink-0 place-items-center rounded-2xl border border-white/30 bg-white/15 backdrop-blur"><Sparkles class="size-5" aria-hidden="true" /></span>
+          </figcaption>
+          <span class="absolute right-4 top-4 rounded-full border border-white/50 bg-white/85 px-3 py-1.5 text-xs font-bold text-slate-800 shadow-sm backdrop-blur dark:border-white/20 dark:bg-slate-900/75 dark:text-white">Gambar dari sudut baca</span>
+        </figure>
+      </section>
+
+      <section class="py-10 sm:py-14" aria-labelledby="interests-title">
+        <div class="mb-4 flex items-end justify-between gap-4">
+          <div><p class="mb-2 text-xs font-bold uppercase tracking-widest text-[var(--muted)]">Di luar layar kerja</p><h2 id="interests-title" class="text-xl font-extrabold tracking-tight sm:text-2xl">Hal yang sering kubuka</h2></div>
+          <span class="hidden rounded-full bg-[var(--paper-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--muted)] sm:inline-flex">sedikit dari banyak hal</span>
+        </div>
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+          <div class="flex min-h-20 items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-3 sm:min-h-24 sm:p-4"><span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-indigo-100 text-indigo-700 dark:bg-indigo-300/15 dark:text-indigo-200"><Gamepad2 class="size-5" aria-hidden="true" /></span><span class="min-w-0"><strong class="block text-sm font-bold">Game</strong><small class="mt-1 block text-xs text-[var(--muted)]">Main &amp; mengamati desain</small></span></div>
+          <div class="flex min-h-20 items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-3 sm:min-h-24 sm:p-4"><span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-rose-100 text-rose-700 dark:bg-rose-300/15 dark:text-rose-200"><Disc3 class="size-5" aria-hidden="true" /></span><span class="min-w-0"><strong class="block text-sm font-bold">Musik</strong><small class="mt-1 block text-xs text-[var(--muted)]">Dari lagu ke cerita</small></span></div>
+          <div class="flex min-h-20 items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-3 sm:min-h-24 sm:p-4"><span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-amber-100 text-amber-700 dark:bg-amber-300/15 dark:text-amber-200"><Palette class="size-5" aria-hidden="true" /></span><span class="min-w-0"><strong class="block text-sm font-bold">Seni visual</strong><small class="mt-1 block text-xs text-[var(--muted)]">Ilustrasi &amp; karya</small></span></div>
+          <div class="flex min-h-20 items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-3 sm:min-h-24 sm:p-4"><span class="grid size-11 shrink-0 place-items-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-300/15 dark:text-emerald-200"><Sparkles class="size-5" aria-hidden="true" /></span><span class="min-w-0"><strong class="block text-sm font-bold">Teknologi</strong><small class="mt-1 block text-xs text-[var(--muted)]">Termasuk AI</small></span></div>
         </div>
       </section>
 
-      <section id="karya" class="work-section" aria-labelledby="work-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow mb-3">Dibuat dengan rasa ingin tahu</p>
-            <h2 id="work-title" class="text-3xl font-semibold tracking-[-.055em] sm:text-4xl">Beberapa karya.</h2>
-          </div>
-          <span class="section-index" aria-hidden="true">01 / 02</span>
+      <section id="karya" class="scroll-mt-8 py-10 sm:py-14" aria-labelledby="work-title">
+        <div class="mb-5 flex items-end justify-between gap-4 sm:mb-7">
+          <div><p class="mb-2 text-xs font-bold uppercase tracking-widest text-[var(--muted)]">Dibuat dengan rasa ingin tahu</p><h2 id="work-title" class="text-2xl font-extrabold tracking-tight sm:text-3xl">Yang sedang kubangun</h2></div>
+          <span class="hidden rounded-full border border-[var(--line)] px-3 py-1.5 text-xs font-bold text-[var(--muted)] sm:inline-flex">01—02</span>
         </div>
-        <div class="work-grid">
-          <article class="work-card work-card--sela">
-            <div class="work-card-top"><span class="work-tag">PRODUK DIGITAL</span><span class="work-number">01</span></div>
-            <div class="work-glyph work-glyph--sela" aria-hidden="true"><span>S</span><i></i><i></i><i></i></div>
-            <div>
-              <h3>Sela</h3>
-              <p>Pembaca buku pribadi yang mengutamakan koleksi lokal, ruang baca yang nyaman, dan kendali pengguna.</p>
+        <div class="grid gap-4 md:grid-cols-2 md:gap-5">
+          <article class="group flex min-h-72 flex-col justify-between overflow-hidden rounded-3xl border border-indigo-200 bg-indigo-50 p-5 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-950/10 dark:border-indigo-300/20 dark:bg-indigo-300/[0.08] sm:min-h-80 sm:p-7">
+            <div class="flex items-start justify-between gap-4">
+              <span class="rounded-full bg-white/80 px-3 py-1.5 text-xs font-extrabold uppercase tracking-widest text-indigo-800 dark:bg-indigo-100/10 dark:text-indigo-100">Produk digital <span class="ml-1 text-indigo-400">/ 01</span></span>
+              <span class="grid size-14 shrink-0 place-items-center rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-900/20 transition group-hover:rotate-[-5deg] group-hover:scale-105 dark:bg-indigo-300 dark:text-indigo-950"><CodeXml class="size-7" aria-hidden="true" /></span>
             </div>
-            <a class="work-link focus-ring" href="https://github.com/bobbyfch/sela" target="_blank" rel="noreferrer noopener">Lihat Sela di GitHub <span aria-hidden="true">↗</span></a>
+            <div class="mt-8">
+              <h3 class="text-3xl font-black tracking-tight text-indigo-950 dark:text-indigo-50 sm:text-4xl">Sela</h3>
+              <p class="mt-3 max-w-lg text-sm leading-6 text-indigo-950/75 dark:text-indigo-50/75 sm:text-base sm:leading-7">Pembaca buku pribadi untuk koleksi lokal, ruang baca yang nyaman, dan kendali tetap di tanganmu.</p>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-11 items-center gap-2 rounded-xl bg-indigo-700 px-4 text-sm font-bold text-white transition hover:bg-indigo-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-700 dark:bg-indigo-200 dark:text-indigo-950 dark:hover:bg-white" href="https://bobbyfch.github.io/sela/">Buka Sela <ArrowUpRight class="size-4" aria-hidden="true" /></a>
+              <a class="inline-flex min-h-11 items-center gap-2 rounded-xl px-4 text-sm font-bold text-indigo-900 transition hover:bg-white/70 focus-visible:outline-2 focus-visible:outline-indigo-700 dark:text-indigo-100 dark:hover:bg-white/10" href="https://github.com/bobbyfch/sela" target="_blank" rel="noreferrer noopener">Lihat kode <ArrowUpRight class="size-4" aria-hidden="true" /></a>
+            </div>
           </article>
-          <article class="work-card work-card--limaraya">
-            <div class="work-card-top"><span class="work-tag">MUSIK · YOGYAKARTA</span><span class="work-number">02</span></div>
-            <div class="work-glyph work-glyph--limaraya" aria-hidden="true"><span>L</span><i></i><i></i></div>
-            <div>
-              <h3>Limaraya</h3>
-              <p>Proyek musik indie pop dan R&amp;B. Dua album, ruang untuk jeda, rasa, dan cerita.</p>
+          <article class="group flex min-h-72 flex-col justify-between overflow-hidden rounded-3xl border border-rose-200 bg-rose-50 p-5 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-rose-950/10 dark:border-rose-300/20 dark:bg-rose-300/[0.08] sm:min-h-80 sm:p-7">
+            <div class="flex items-start justify-between gap-4">
+              <span class="rounded-full bg-white/80 px-3 py-1.5 text-xs font-extrabold uppercase tracking-widest text-rose-800 dark:bg-rose-100/10 dark:text-rose-100">Musik · Yogyakarta <span class="ml-1 text-rose-400">/ 02</span></span>
+              <span class="grid size-14 shrink-0 place-items-center rounded-2xl bg-rose-500 text-white shadow-lg shadow-rose-900/20 transition group-hover:rotate-[5deg] group-hover:scale-105"><Disc3 class="size-7" aria-hidden="true" /></span>
             </div>
-            <a class="work-link focus-ring" href="#limaraya">Jelajahi Limaraya <span aria-hidden="true">↘</span></a>
+            <div class="mt-8">
+              <h3 class="text-3xl font-black tracking-tight text-rose-950 dark:text-rose-50 sm:text-4xl">Limaraya</h3>
+              <p class="mt-3 max-w-lg text-sm leading-6 text-rose-950/75 dark:text-rose-50/75 sm:text-base sm:leading-7">Proyek musik indie pop dan R&amp;B. Dua album, ruang untuk jeda, rasa, dan cerita.</p>
+            </div>
+            <a class="mt-6 inline-flex min-h-11 w-fit items-center gap-2 rounded-xl px-4 text-sm font-bold text-rose-900 transition hover:bg-white/70 focus-visible:outline-2 focus-visible:outline-rose-700 dark:text-rose-100 dark:hover:bg-white/10" href="#limaraya">Jelajahi Limaraya <ArrowDownRight class="size-4" aria-hidden="true" /></a>
           </article>
         </div>
       </section>
 
-      <section id="sosial" class="personal-social" aria-labelledby="personal-social-title">
-        <div>
-          <p class="eyebrow mb-3">Temukan saya</p>
-          <h2 id="personal-social-title" class="text-2xl font-semibold tracking-[-.05em]">Di internet.</h2>
+      <section id="sosial" class="scroll-mt-8 border-y border-[var(--line)] py-8 sm:py-10" aria-labelledby="personal-social-title">
+        <div class="mb-5 flex flex-wrap items-end justify-between gap-3">
+          <div><p class="mb-2 text-xs font-bold uppercase tracking-widest text-[var(--muted)]">Temukan saya</p><h2 id="personal-social-title" class="text-2xl font-extrabold tracking-tight">Di internet</h2></div>
+          <p class="text-sm text-[var(--muted)]">Pilih tempat yang paling nyaman.</p>
         </div>
-        <div class="personal-social-links">
+        <div class="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
           {personalSocials.map((social) => (
-            <a class="personal-social-link focus-ring" href={social.href} target="_blank" rel="noreferrer noopener" aria-label={`${social.name}: ${social.note}`}>
-              <span class="social-icon" aria-hidden="true"><span>{social.mark}</span></span>
-              <span><strong>{social.name}</strong><small>{social.note}</small></span>
-              <span class="social-arrow" aria-hidden="true">↗</span>
+            <a class="group flex min-h-16 min-w-0 items-center gap-3 rounded-2xl border border-transparent p-2 transition hover:border-[var(--line)] hover:bg-[var(--paper)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:min-h-20 sm:p-3" href={social.href} target="_blank" rel="noreferrer noopener" aria-label={`${social.name}: ${social.note}`}>
+              <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-[var(--paper-soft)] text-[var(--accent)]"><span class="hidden">{social.mark}</span>{social.name === "GitHub" ? <CodeXml class="size-5" aria-hidden="true" /> : social.name === "Instagram" ? <Camera class="size-5" aria-hidden="true" /> : social.name === "Threads" ? <AtSign class="size-5" aria-hidden="true" /> : <Briefcase class="size-5" aria-hidden="true" />}</span>
+              <span class="min-w-0 flex-1"><strong class="block truncate text-sm font-bold">{social.name}</strong><small class="mt-0.5 block truncate text-xs text-[var(--muted)]">{social.note}</small></span>
+              <ArrowUpRight class="size-4 shrink-0 text-[var(--muted)] transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" aria-hidden="true" />
             </a>
           ))}
         </div>
       </section>
 
-      <section id="limaraya" class="hero-stage" aria-labelledby="limaraya-title">
-        <div class="hero-copy">
-          <p class="eyebrow hero-kicker">Indie pop &amp; R&amp;B <span aria-hidden="true">/</span> Yogyakarta</p>
-          <h2 id="limaraya-title" class="hero-title">Lima suara,<br /><em>satu cerita.</em></h2>
-          <p class="hero-description">Dua album Limaraya: <i>Spektrum Rasa</i> dan <i>Anahata</i>. Dengarkan lewat platform pilihanmu.</p>
-          <div class="hero-actions">
-            <a class="hero-listen focus-ring" href="https://open.spotify.com/album/6NLGRRITjG1iuZdxcnC3Ea" target="_blank" rel="noreferrer noopener">
-              <span class="hero-play" aria-hidden="true">▶</span> Dengarkan Anahata
-            </a>
-            <a class="hero-link focus-ring" href="#musik">Semua platform <span aria-hidden="true">↘</span></a>
+      <section id="limaraya" class="grid scroll-mt-8 overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--paper)] md:grid-cols-[0.92fr_1.08fr]" aria-labelledby="limaraya-title">
+        <div class="flex flex-col items-start justify-center p-6 sm:p-9 lg:p-12">
+          <p class="inline-flex items-center gap-2 rounded-full bg-rose-100 px-3 py-1.5 text-xs font-extrabold uppercase tracking-widest text-rose-800 dark:bg-rose-300/15 dark:text-rose-100">Indie pop &amp; R&amp;B <span class="size-1.5 rounded-full bg-rose-500" aria-hidden="true"></span> Yogyakarta</p>
+          <h2 id="limaraya-title" class="mt-6 text-4xl font-black leading-[0.98] tracking-tighter sm:text-5xl lg:text-6xl">Lima suara,<br /><span class="text-[var(--coral)]">satu cerita.</span></h2>
+          <p class="mt-5 max-w-md text-sm leading-7 text-[var(--muted)] sm:text-base sm:leading-8">Dua album Limaraya: <i class="font-semibold text-[var(--ink)]">Spektrum Rasa</i> dan <i class="font-semibold text-[var(--ink)]">Anahata</i>. Dengarkan lewat platform pilihanmu.</p>
+          <div class="mt-6 flex flex-wrap items-center gap-2">
+            <a class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-rose-500 px-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-rose-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600" href="https://open.spotify.com/album/6NLGRRITjG1iuZdxcnC3Ea" target="_blank" rel="noreferrer noopener"><Play class="size-4 fill-current" aria-hidden="true" /> Dengarkan Anahata</a>
+            <a class="inline-flex min-h-12 items-center gap-2 rounded-xl px-4 text-sm font-bold text-[var(--muted)] transition hover:bg-[var(--paper-soft)] hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]" href="#musik">Semua platform <ArrowDownRight class="size-4 text-[var(--coral)]" aria-hidden="true" /></a>
           </div>
-          <div class="hero-signoff">
-            <img src="/albums/limaraya-spotify-profile.jpg" alt="" width="320" height="320" />
-            <span>Limaraya <span aria-hidden="true">·</span> Yogyakarta, Indonesia</span>
+          <div class="mt-7 flex items-center gap-3 text-xs font-semibold text-[var(--muted)] sm:mt-9">
+            <img class="size-10 rounded-full border border-[var(--line)] object-cover" src="/albums/limaraya-spotify-profile.jpg" alt="" width="320" height="320" loading="lazy" />
+            <span>Limaraya <span class="mx-1 text-[var(--coral)]">·</span> Yogyakarta, Indonesia</span>
           </div>
         </div>
-
-        <div class="hero-artwork" aria-label="Sampul dua album Limaraya">
-          <figure class="hero-cover hero-cover--first">
-            <a href="https://open.spotify.com/album/6klR0U5CBaWT7oXIN2z9OH" target="_blank" rel="noreferrer noopener" aria-label="Buka album pertama Spektrum Rasa di Spotify">
-              <img src="/albums/spektrum-rasa.jpg" alt="Sampul asli album Spektrum Rasa" width="1200" height="1200" fetchpriority="high" />
-              <figcaption><span>01</span><span>Spektrum Rasa</span></figcaption>
+        <div class="relative isolate min-h-80 overflow-hidden bg-rose-50 dark:bg-rose-300/[0.06] sm:min-h-[27rem] md:min-h-full" aria-label="Sampul dua album Limaraya">
+          <span class="absolute right-5 top-5 rounded-full border border-white/70 bg-white/80 px-3 py-1.5 text-xs font-extrabold tracking-widest text-slate-800 backdrop-blur dark:border-white/10 dark:bg-slate-900/70 dark:text-white">ALBUM / 2025—2026</span>
+          <figure class="absolute right-[8%] top-[12%] m-0 w-[72%] max-w-md rotate-2 overflow-hidden rounded-2xl border-4 border-white shadow-2xl transition duration-300 hover:rotate-0 dark:border-slate-800">
+            <a class="relative block" href="https://open.spotify.com/album/6klR0U5CBaWT7oXIN2z9OH" target="_blank" rel="noreferrer noopener" aria-label="Buka album pertama Spektrum Rasa di Spotify">
+              <img class="block aspect-square w-full object-cover" src="/albums/spektrum-rasa.jpg" alt="Sampul asli album Spektrum Rasa" width="1200" height="1200" fetchpriority="high" />
+              <figcaption class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-slate-950/85 to-transparent px-3 pb-3 pt-10 text-xs font-extrabold uppercase tracking-widest text-white sm:px-4 sm:pb-4 sm:text-xs"><span>01</span><span>Spektrum Rasa</span></figcaption>
             </a>
           </figure>
-          <figure class="hero-cover hero-cover--second">
-            <a href="https://open.spotify.com/album/6NLGRRITjG1iuZdxcnC3Ea" target="_blank" rel="noreferrer noopener" aria-label="Buka album kedua Anahata di Spotify">
-              <img src="/albums/anahata.jpg" alt="Sampul asli album Anahata" width="1200" height="1200" />
-              <figcaption><span>02</span><span>Anahata</span></figcaption>
+          <figure class="absolute bottom-[7%] left-[4%] z-10 m-0 w-[41%] max-w-56 -rotate-3 overflow-hidden rounded-2xl border-4 border-[var(--page)] shadow-xl transition duration-300 hover:rotate-0">
+            <a class="relative block" href="https://open.spotify.com/album/6NLGRRITjG1iuZdxcnC3Ea" target="_blank" rel="noreferrer noopener" aria-label="Buka album kedua Anahata di Spotify">
+              <img class="block aspect-square w-full object-cover" src="/albums/anahata.jpg" alt="Sampul asli album Anahata" width="1200" height="1200" loading="lazy" />
+              <figcaption class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 bg-gradient-to-t from-slate-950/85 to-transparent px-2 pb-2 pt-8 text-xs font-extrabold uppercase tracking-widest text-white sm:px-3 sm:pb-3 sm:text-xs"><span>02</span><span>Anahata</span></figcaption>
             </a>
           </figure>
-          <span class="hero-art-note" aria-hidden="true">ALBUM / 2025—2026</span>
+          <span class="absolute bottom-[15%] right-[5%] size-12 rounded-full border-2 border-dashed border-rose-300/80 sm:size-16" aria-hidden="true"></span>
+          <span class="absolute bottom-[9%] right-[10%] size-3 rounded-full bg-[var(--coral)]" aria-hidden="true"></span>
         </div>
       </section>
 
-      <section id="cerita-limaraya" class="grid gap-6 py-20 sm:grid-cols-[.7fr_1.3fr] sm:items-end sm:py-28" aria-labelledby="story-title">
+      <section id="cerita-limaraya" class="grid scroll-mt-8 gap-5 py-12 sm:grid-cols-[0.8fr_1.2fr] sm:items-end sm:gap-8 sm:py-16 lg:py-20" aria-labelledby="story-title">
         <div>
-          <p class="eyebrow mb-4">Tentang Limaraya</p>
-          <h2 id="story-title" class="max-w-md text-4xl font-semibold leading-[1.06] tracking-[-.055em] sm:text-5xl">Indie pop dan R&amp;B dari Yogyakarta.</h2>
+          <p class="mb-3 text-xs font-bold uppercase tracking-widest text-[var(--muted)]">Tentang Limaraya</p>
+          <h2 id="story-title" class="max-w-lg text-3xl font-black leading-[1.04] tracking-tight sm:text-4xl lg:text-5xl">Indie pop dan R&amp;B dari Yogyakarta.</h2>
         </div>
-        <div class="max-w-xl sm:justify-self-end">
+        <div class="max-w-2xl sm:justify-self-end">
           <p class="text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">Berangkat dari ruang rumah dan percakapan sehari-hari, Limaraya menulis lagu tentang hal-hal yang dekat—dengan ruang untuk jeda, rasa, dan tafsir.</p>
-          <p class="story-caption">CATATAN MUSIK <span aria-hidden="true">·</span> YOGYAKARTA</p>
+          <p class="mt-4 text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">Catatan musik <span class="mx-1 text-[var(--coral)]" aria-hidden="true">·</span> Yogyakarta</p>
         </div>
       </section>
 
       <section id="musik" class="scroll-mt-8" aria-labelledby="music-title">
-        <div class="mb-7 flex flex-wrap items-end justify-between gap-4">
+        <div class="mb-4 flex flex-wrap items-end justify-between gap-4 sm:mb-6">
           <div>
-            <p class="eyebrow mb-3">Putar sesuai suasana</p>
-            <h2 id="music-title" class="text-3xl font-semibold tracking-[-.055em] sm:text-4xl">Dengar di sini.</h2>
+            <p class="mb-2 text-xs font-bold uppercase tracking-widest text-[var(--muted)]">Putar sesuai suasana</p>
+            <h2 id="music-title" class="text-2xl font-extrabold tracking-tight sm:text-3xl">Dengar di sini</h2>
           </div>
-          <a class="focus-ring rounded-lg pb-1 text-sm font-bold text-[var(--accent)] underline decoration-[var(--accent)]/30 underline-offset-4 hover:decoration-[var(--accent)]" href="https://linktr.ee/limaraya" target="_blank" rel="noreferrer noopener">Semua tautan Limaraya ↗</a>
+          <a class="inline-flex min-h-10 items-center gap-1 rounded-lg px-2 text-sm font-bold text-[var(--accent)] hover:bg-[var(--paper-soft)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]" href="https://linktr.ee/limaraya" target="_blank" rel="noreferrer noopener">Semua tautan Limaraya <ArrowUpRight class="size-4" aria-hidden="true" /></a>
         </div>
-        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3">
           {streaming.map((service) => (
-            <a class="music-link focus-ring" href={service.href} target="_blank" rel="noreferrer noopener" aria-label={`${service.name}: ${service.note}`}>
-              <span class="service-mark" aria-hidden="true">
+            <a class="group flex min-h-20 min-w-0 items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-3 transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:shadow-lg hover:shadow-blue-950/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:gap-4 sm:p-4" href={service.href} target="_blank" rel="noreferrer noopener" aria-label={`${service.name}: ${service.note}`}>
+              <span class="grid size-11 shrink-0 place-items-center rounded-xl border border-[var(--line)] bg-[var(--paper-soft)]" aria-hidden="true">
                 {service.icon ? <img src={service.icon} alt="" width="32" height="32" /> : <span>{service.mark}</span>}
               </span>
               <span class="min-w-0 flex-1">
-                <span class="block font-bold">{service.name}</span>
-                <span class="mt-1 block text-xs leading-5 text-[var(--muted)]">{service.note}</span>
+                <span class="block truncate text-sm font-bold">{service.name}</span>
+                <span class="mt-1 block text-xs leading-4 text-[var(--muted)]">{service.note}</span>
               </span>
-              <span class="text-lg text-[var(--muted)]" aria-hidden="true">↗</span>
+              <ArrowUpRight class="size-4 shrink-0 text-[var(--muted)] transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" aria-hidden="true" />
             </a>
           ))}
-          <a class="music-link focus-ring sm:col-span-2 lg:col-span-1" href="https://linktr.ee/limaraya" target="_blank" rel="noreferrer noopener">
-            <span class="service-mark" aria-hidden="true">＋</span>
-            <span class="min-w-0 flex-1"><span class="block font-bold">Cari platform lain</span><span class="mt-1 block text-xs leading-5 text-[var(--muted)]">Buka semua tautan di Linktree</span></span>
-            <span class="text-lg text-[var(--muted)]" aria-hidden="true">↗</span>
+          <a class="group flex min-h-20 min-w-0 items-center gap-3 rounded-2xl border border-dashed border-[var(--line)] p-3 transition hover:border-[var(--accent)] hover:bg-[var(--paper)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:gap-4 sm:p-4" href="https://linktr.ee/limaraya" target="_blank" rel="noreferrer noopener">
+            <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-[var(--paper-soft)] text-xl font-bold text-[var(--accent)]" aria-hidden="true">＋</span>
+            <span class="min-w-0 flex-1"><span class="block text-sm font-bold">Cari platform lain</span><span class="mt-1 block text-xs leading-4 text-[var(--muted)]">Buka semua tautan di Linktree</span></span>
+            <ArrowUpRight class="size-4 shrink-0 text-[var(--muted)] group-hover:text-[var(--accent)]" aria-hidden="true" />
           </a>
         </div>
       </section>
 
-      <section class="pt-20 sm:pt-28" aria-labelledby="release-title">
-        <div class="mb-7 flex items-end justify-between gap-4">
-          <div>
-            <p class="eyebrow mb-3">Cerita dalam album</p>
-            <h2 id="release-title" class="text-3xl font-semibold tracking-[-.055em] sm:text-4xl">Dua album, satu dunia.</h2>
-          </div>
+      <section class="py-12 sm:py-16 lg:py-20" aria-labelledby="release-title">
+        <div class="mb-5 flex flex-wrap items-end justify-between gap-3 sm:mb-7">
+          <div><p class="mb-2 text-xs font-bold uppercase tracking-widest text-[var(--muted)]">Cerita dalam album</p><h2 id="release-title" class="text-2xl font-extrabold tracking-tight sm:text-3xl">Dua album, satu dunia</h2></div>
+          <span class="rounded-full bg-[var(--paper-soft)] px-3 py-1.5 text-xs font-bold text-[var(--muted)]">Rilisan resmi Limaraya</span>
         </div>
-        <div class="release-list">
+        <div class="space-y-4 sm:space-y-5">
           {releases.map((release) => (
-            <article class={`release-card ${release.number === "02" ? "release-card--reverse" : ""}`}>
-              <span class="release-number" aria-hidden="true">{release.number}</span>
-              <figure class="release-art">
-                <img class="release-cover" src={release.image} alt={`Sampul asli album ${release.title} oleh Limaraya`} loading="lazy" width="1200" height="1200" />
-                <figcaption class="release-art-caption">LIMARAYA <span aria-hidden="true">/</span> SAMPUL ALBUM</figcaption>
+            <article class="grid min-w-0 overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--paper)] md:grid-cols-[0.76fr_1.24fr]">
+              <figure class="relative m-0 min-w-0 overflow-hidden bg-[var(--paper-soft)]">
+                <img class="block aspect-square w-full object-cover" src={release.image} alt={`Sampul asli album ${release.title} oleh Limaraya`} loading="lazy" width="1200" height="1200" />
+                <figcaption class="absolute bottom-3 left-3 rounded-full border border-white/50 bg-slate-950/60 px-3 py-1.5 text-xs font-extrabold tracking-widest text-white backdrop-blur sm:bottom-4 sm:left-4">{release.number} <span class="mx-1 text-cyan-200">/</span> LIMARAYA</figcaption>
               </figure>
-              <div class="release-content">
-                <span class="eyebrow release-detail">{release.detail}</span>
-                <h3 class="release-title">{release.title}</h3>
-                <p class="release-note">Sampul dan pemutar dari rilisan resmi Limaraya.</p>
-                <div class="release-links mt-4" aria-label={`Tautan ${release.title}`}>
+              <div class="min-w-0 p-4 sm:p-6 lg:p-8">
+                <span class="inline-flex rounded-full bg-[var(--paper-soft)] px-3 py-1.5 text-xs font-bold text-[var(--accent)]">{release.detail}</span>
+                <h3 class="mt-3 text-3xl font-black leading-tight tracking-tighter sm:text-4xl lg:text-5xl">{release.title}</h3>
+                <p class="mt-2 text-sm leading-6 text-[var(--muted)]">Sampul dan pemutar dari rilisan resmi Limaraya.</p>
+                <div class="mt-4 flex flex-wrap gap-1.5" aria-label={`Tautan ${release.title}`}>
                   {release.links.map((service) => (
-                    <a class="release-service-link focus-ring" href={service.href} target="_blank" rel="noreferrer noopener">
-                      {service.icon ? <img src={service.icon} alt="" width="20" height="20" /> : <span class="service-initial" aria-hidden="true">{service.mark}</span>}
-                      <span>{service.name}</span>
-                      <span aria-hidden="true">↗</span>
+                    <a class="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-[var(--line)] px-2.5 text-xs font-bold text-[var(--muted)] transition hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]" href={service.href} target="_blank" rel="noreferrer noopener">
+                      {service.icon ? <img class="size-4 object-contain" src={service.icon} alt="" width="20" height="20" /> : <span aria-hidden="true">{service.mark}</span>}
+                      <span>{service.name}</span><ArrowUpRight class="size-3" aria-hidden="true" />
                     </a>
                   ))}
                 </div>
-                <div class="release-players mt-4" aria-label={`Pemutar resmi ${release.title}`}>
+                <div class="mt-4 grid gap-2 sm:grid-cols-2" aria-label={`Pemutar resmi ${release.title}`}>
                   {release.embeds.map((embed) => (
-                    <details class="player-disclosure" data-lazy-player>
-                      <summary class="player-summary">
-                        {embed.icon ? <img src={embed.icon} alt="" width="21" height="21" /> : <span class="service-initial" aria-hidden="true">{embed.mark}</span>}
-                        <span>Putar di {embed.name}</span>
-                        <span class="player-chevron" aria-hidden="true">＋</span>
+                    <details class="group min-w-0 overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--page)]" data-lazy-player>
+                      <summary class="flex min-h-11 cursor-pointer items-center gap-2 px-3 py-2 text-xs font-bold text-[var(--muted)] transition hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]">
+                        {embed.icon ? <img class="size-5 rounded-md border border-[var(--line)] bg-white p-0.5 object-contain" src={embed.icon} alt="" width="21" height="21" /> : <span class="grid size-5 place-items-center rounded-md border border-[var(--line)] bg-[var(--paper)] text-xs" aria-hidden="true">{embed.mark}</span>}
+                        <span class="min-w-0 flex-1 truncate">Putar di {embed.name}</span>
+                        <span class="text-base font-normal text-[var(--accent)] transition group-open:rotate-45" aria-hidden="true">＋</span>
                       </summary>
-                      <div class="player-frame">
-                        <iframe data-src={embed.src} title={`${release.title} — pemutar resmi ${embed.name}`} width="100%" height={embed.height} loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share" allowfullscreen></iframe>
+                      <div class="max-w-full overflow-hidden border-t border-[var(--line)] bg-[var(--paper)]">
+                        <iframe class="block max-w-full border-0 bg-[var(--paper)]" data-src={embed.src} title={`${release.title} — pemutar resmi ${embed.name}`} width="100%" height={embed.height} loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share" allowfullscreen></iframe>
                       </div>
-                      <a class="player-open-link" href={release.links.find((service) => service.name === embed.name)?.href} target="_blank" rel="noreferrer noopener">Buka {embed.name} di tab baru ↗</a>
+                      <a class="inline-flex min-h-10 items-center gap-1 px-3 text-xs font-bold text-[var(--accent)] hover:underline" href={release.links.find((service) => service.name === embed.name)?.href} target="_blank" rel="noreferrer noopener">Buka {embed.name} di tab baru <ArrowUpRight class="size-3" aria-hidden="true" /></a>
                     </details>
                   ))}
                 </div>
@@ -321,75 +343,71 @@ const morePlayers = [
         </div>
       </section>
 
-      <section id="pemain" class="pt-20 sm:pt-28" aria-labelledby="players-title">
-        <div class="mb-7">
-          <p class="eyebrow mb-3">Lebih dekat dengan musik</p>
-          <h2 id="players-title" class="text-3xl font-semibold tracking-[-.055em] sm:text-4xl">Video dan suara.</h2>
+      <section id="pemain" class="scroll-mt-8 py-10 sm:py-14" aria-labelledby="players-title">
+        <div class="mb-5">
+          <p class="mb-2 text-xs font-bold uppercase tracking-widest text-[var(--muted)]">Lebih dekat dengan musik</p>
+          <h2 id="players-title" class="text-2xl font-extrabold tracking-tight sm:text-3xl">Video dan suara</h2>
         </div>
-        <div class="grid gap-4 md:grid-cols-2">
+        <div class="grid gap-3 md:grid-cols-2 md:gap-4">
           {morePlayers.map((player) => (
-            <article class="extra-player-card p-5 sm:p-6">
+            <article class="min-w-0 rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-4 sm:p-5">
               <div class="flex items-center gap-3">
-                <span class="extra-player-icon" aria-hidden="true"><img src={player.icon} alt="" width="32" height="32" /></span>
-                <div>
+                <span class="grid size-11 shrink-0 place-items-center rounded-xl border border-[var(--line)] bg-[var(--paper-soft)]"><img class="size-6 object-contain" src={player.icon} alt="" width="32" height="32" /></span>
+                <div class="min-w-0">
                   <h3 class="font-bold">{player.name}</h3>
-                  <p class="mt-1 text-sm text-[var(--muted)]">{player.note}</p>
+                  <p class="mt-1 text-sm leading-5 text-[var(--muted)]">{player.note}</p>
                 </div>
               </div>
-              <details class="player-disclosure mt-5" data-lazy-player>
-                <summary class="player-summary">
-                  <span>Buka pemutar {player.name}</span>
-                  <span class="player-chevron" aria-hidden="true">＋</span>
+              <details class="group mt-4 overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--page)]" data-lazy-player>
+                <summary class="flex min-h-11 cursor-pointer items-center gap-2 px-3 py-2 text-xs font-bold text-[var(--muted)] transition hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]">
+                  <span class="min-w-0 flex-1 truncate">Buka pemutar {player.name}</span>
+                  <span class="text-base font-normal text-[var(--accent)] transition group-open:rotate-45" aria-hidden="true">＋</span>
                 </summary>
-                <div class="player-frame">
-                  <iframe data-src={player.src} title={`Pemutar resmi Limaraya di ${player.name}`} width="100%" height={player.height} loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <div class="max-w-full overflow-hidden border-t border-[var(--line)] bg-[var(--paper)]">
+                  <iframe class="block max-w-full border-0 bg-[var(--paper)]" data-src={player.src} title={`Pemutar resmi Limaraya di ${player.name}`} width="100%" height={player.height} loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
               </details>
-              <a class="player-open-link" href={player.href} target="_blank" rel="noreferrer noopener">Buka kanal Limaraya di {player.name} ↗</a>
+              <a class="mt-2 inline-flex min-h-9 items-center gap-1 text-xs font-bold text-[var(--accent)] hover:underline" href={player.href} target="_blank" rel="noreferrer noopener">Buka kanal Limaraya di {player.name} <ArrowUpRight class="size-3" aria-hidden="true" /></a>
             </article>
           ))}
         </div>
       </section>
 
-      <section id="sosial-limaraya" class="grid gap-8 border-y border-[var(--line)] py-12 sm:grid-cols-[.7fr_1.3fr] sm:items-center sm:py-14" aria-labelledby="social-title">
+      <section id="sosial-limaraya" class="grid scroll-mt-8 gap-5 border-y border-[var(--line)] py-8 sm:grid-cols-[0.7fr_1.3fr] sm:items-center sm:gap-8 sm:py-10" aria-labelledby="social-title">
         <div>
-          <p class="eyebrow mb-3">Kita ketemu di sana</p>
-          <h2 id="social-title" class="text-2xl font-semibold tracking-[-.05em]">Ikuti hari-hari kami.</h2>
+          <p class="mb-2 text-xs font-bold uppercase tracking-widest text-[var(--muted)]">Kita ketemu di sana</p>
+          <h2 id="social-title" class="text-xl font-extrabold tracking-tight sm:text-2xl">Ikuti hari-hari kami</h2>
         </div>
-        <div class="grid grid-cols-2 gap-x-5 gap-y-4 sm:grid-cols-4">
+        <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
           {socials.map((social) => (
-            <a class="social-link focus-ring rounded-lg" href={social.href} target="_blank" rel="noreferrer noopener">
-              <span class="social-icon" aria-hidden="true">
-                {social.icon ? <img src={social.icon} alt="" width="29" height="29" /> : <span>{social.mark}</span>}
+            <a class="group flex min-h-12 items-center gap-2 rounded-xl p-2 text-xs font-bold text-[var(--muted)] transition hover:bg-[var(--paper)] hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]" href={social.href} target="_blank" rel="noreferrer noopener">
+              <span class="grid size-9 shrink-0 place-items-center rounded-xl border border-[var(--line)] bg-[var(--paper)] p-1.5" aria-hidden="true">
+                {social.icon ? <img class="size-5 object-contain" src={social.icon} alt="" width="29" height="29" /> : <span class="grid size-5 place-items-center text-xs font-black text-[var(--accent)]">{social.mark}</span>}
               </span>
-              {social.name}<span class="text-xs" aria-hidden="true">↗</span>
+              <span class="min-w-0 flex-1 truncate">{social.name}</span><ArrowUpRight class="size-3 shrink-0 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
             </a>
           ))}
         </div>
       </section>
 
-      <section class="coming-panel" aria-labelledby="coming-title">
-        <div>
-          <span class="eyebrow">Cerita berikutnya</span>
-          <h2 id="coming-title">Terus<br /><em>bertumbuh.</em></h2>
-        </div>
-        <div>
-          <p>Temui Limaraya dan dengarkan dua album yang sudah tersedia di platform pilihanmu.</p>
-          <a class="focus-ring inline-flex min-h-12 items-center gap-3 border border-[var(--line)] bg-[var(--paper)] px-5 text-sm font-bold transition hover:-translate-y-0.5" href="https://linktr.ee/limaraya" target="_blank" rel="noreferrer noopener">Semua tautan Limaraya <span class="text-[var(--accent)]" aria-hidden="true">↗</span></a>
+      <section class="mt-10 grid gap-5 overflow-hidden rounded-3xl border border-[var(--line)] bg-[var(--paper-soft)] p-5 sm:mt-14 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-8 sm:p-8" aria-labelledby="coming-title">
+        <div><span class="mb-2 block text-xs font-bold uppercase tracking-widest text-[var(--muted)]">Cerita berikutnya</span><h2 id="coming-title" class="text-2xl font-black tracking-tight sm:text-3xl">Masih banyak yang ingin dibuat.</h2></div>
+        <div class="max-w-lg sm:justify-self-end">
+          <p class="text-sm leading-6 text-[var(--muted)]">Temui Limaraya dan dengarkan dua album yang sudah tersedia di platform pilihanmu.</p>
+          <a class="mt-4 inline-flex min-h-11 items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--paper)] px-4 text-sm font-bold transition hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]" href="https://linktr.ee/limaraya" target="_blank" rel="noreferrer noopener">Semua tautan Limaraya <ArrowUpRight class="size-4" aria-hidden="true" /></a>
         </div>
       </section>
     </main>
 
-    <footer class="page-shell flex flex-col gap-3 border-t border-[var(--line)] py-7 text-xs font-semibold text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
-      <a class="focus-ring w-fit rounded-sm tracking-[.08em] text-[var(--ink)]" href="#top">BOBBY F. CHRISTIAN</a>
+    <footer class="mx-auto flex w-full max-w-7xl flex-col gap-3 border-t border-[var(--line)] px-4 py-6 text-xs font-semibold text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+      <a class="w-fit rounded-sm font-extrabold tracking-tight text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]" href="#top">BOBBY FAJAR CHRISTIAN</a>
       <p>Web developer · musik · cerita · © {new Date().getFullYear()}</p>
-      <a class="focus-ring w-fit rounded-sm hover:text-[var(--accent)]" href="https://linktr.ee/limaraya" target="_blank" rel="noreferrer noopener">Linktree ↗</a>
+      <a class="w-fit rounded-sm transition hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-[var(--accent)]" href="https://linktr.ee/limaraya" target="_blank" rel="noreferrer noopener">Linktree <ArrowUpRight class="inline size-3" aria-hidden="true" /></a>
     </footer>
 
     <script>
       const toggle = document.querySelector<HTMLButtonElement>("#theme-toggle");
       const label = document.querySelector<HTMLSpanElement>("#theme-label");
-      const icon = document.querySelector<SVGElement>("#theme-icon");
       const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
 
       document.querySelectorAll<HTMLDetailsElement>("[data-lazy-player]").forEach((player) => {
@@ -408,12 +426,7 @@ const morePlayers = [
           toggle.setAttribute("aria-pressed", String(isDark));
           toggle.setAttribute("aria-label", `Ganti ke tema ${isDark ? "terang" : "gelap"}`);
         }
-        if (themeColor) themeColor.content = isDark ? "#020815" : "#D0D0D0";
-        if (icon) {
-          icon.innerHTML = isDark
-            ? '<path d="M20.2 15.2A8.5 8.5 0 0 1 8.8 3.8 8.5 8.5 0 1 0 20.2 15.2Z"/><path d="m16.5 4.5.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8Z"/>'
-            : '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>';
-        }
+        if (themeColor) themeColor.content = isDark ? "#101a2b" : "#f3f7ff";
       };
 
       updateThemeControls();
@@ -421,7 +434,7 @@ const morePlayers = [
         const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
         document.documentElement.dataset.theme = next;
         try {
-          localStorage.setItem("limaraya-theme", next);
+          localStorage.setItem("bobby-theme", next);
         } catch {
           // The theme still changes for this visit when storage is unavailable.
         }
