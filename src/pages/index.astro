@@ -59,6 +59,11 @@ const socials = [
   { name: "Facebook", href: "https://www.facebook.com/limarayamusic", icon: "/brand-icons/facebook.ico" },
 ];
 
+const personalSocials = [
+  { name: "GitHub", href: "https://github.com/bobbyfch", mark: "GH", note: "Proyek dan kode" },
+  { name: "Instagram", href: "https://www.instagram.com/bobbyfch/", mark: "IG", note: "Foto dan keseharian" },
+];
+
 const morePlayers = [
   {
     name: "YouTube",
@@ -85,16 +90,15 @@ const morePlayers = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#D0D0D0" />
-    <meta name="description" content="Limaraya — lima suara, satu cerita. Dengarkan musik kami dan temukan Limaraya di berbagai platform." />
+    <meta name="description" content="Beranda Bobby Fajar Christian. Web developer, pembuat Sela, dan bagian dari Limaraya." />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Limaraya — Lima suara, satu cerita" />
-    <meta property="og:description" content="Bercerita di antara kota, hati, dan raya. Temukan musik dan kabar terbaru Limaraya." />
+    <meta property="og:title" content="Bobby Fajar Christian" />
+    <meta property="og:description" content="Web developer, pembuat Sela, dan bagian dari Limaraya." />
     <meta property="og:url" content="https://bobbyfch.github.io/" />
-    <meta property="og:image" content="https://bobbyfch.github.io/albums/anahata.jpg" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/jpeg" href="/albums/limaraya-spotify-profile.jpg" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" type="image/svg+xml" href="/bobby.svg" />
     <link rel="canonical" href="https://bobbyfch.github.io/" />
-    <title>Limaraya — Lima suara, satu cerita</title>
+    <title>Bobby Fajar Christian — Web Developer</title>
     <script is:inline>
       (() => {
         try {
@@ -108,16 +112,16 @@ const morePlayers = [
     </script>
   </head>
   <body class="min-h-screen bg-[var(--page)] text-[var(--ink)] antialiased">
-    <header class="page-shell flex items-center justify-between py-5 sm:py-7">
-      <a class="focus-ring inline-flex items-center gap-3 rounded-xl" href="#top" aria-label="Limaraya, ke bagian atas">
-        <img class="size-10 rounded-full border border-[var(--line)] object-cover" src="/albums/limaraya-spotify-profile.jpg" alt="" width="320" height="320" />
-        <span class="font-bold tracking-[0.17em]">LIMARAYA<span class="text-[var(--accent)]">.</span></span>
+    <header class="page-shell flex flex-wrap items-center justify-between gap-x-6 gap-y-4 py-5 sm:py-7">
+      <a class="focus-ring inline-flex items-center gap-3 rounded-xl" href="#top" aria-label="Bobby Fajar Christian, ke bagian atas">
+        <span class="brand-monogram" aria-hidden="true">BF</span>
+        <span class="font-bold tracking-[0.08em]">BOBBY F. CHRISTIAN<span class="text-[var(--accent)]">.</span></span>
       </a>
-      <nav class="hidden items-center gap-8 text-sm font-semibold sm:flex" aria-label="Navigasi utama">
-        <a class="header-link" href="#musik">Musik</a>
-        <a class="header-link" href="#pemain">Pemain</a>
-        <a class="header-link" href="#cerita">Cerita kami</a>
-        <a class="header-link" href="#sosial">Ikuti</a>
+      <nav class="order-3 flex w-full items-center justify-between gap-4 text-xs font-semibold sm:order-none sm:w-auto sm:justify-start sm:gap-7 sm:text-sm" aria-label="Navigasi utama">
+        <a class="header-link" href="#karya">Karya</a>
+        <a class="header-link" href="#limaraya">Limaraya</a>
+        <a class="header-link" href="#tentang">Tentang</a>
+        <a class="header-link" href="#sosial">Sosial</a>
       </nav>
       <button id="theme-toggle" class="focus-ring inline-flex min-h-11 items-center gap-2 rounded-full border border-[var(--line)] bg-[var(--paper)] px-4 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5" type="button" aria-pressed="false" aria-label="Ganti tema warna">
         <svg id="theme-icon" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -128,10 +132,74 @@ const morePlayers = [
     </header>
 
     <main id="top" class="page-shell pb-16 sm:pb-24">
-      <section class="hero-stage" aria-labelledby="hero-title">
+      <section id="tentang" class="profile-hero" aria-labelledby="hero-title">
+        <div class="profile-copy">
+          <p class="eyebrow">PORTOFOLIO PERSONAL <span aria-hidden="true">/</span> INDONESIA</p>
+          <h1 id="hero-title" class="profile-title">Bobby Fajar<br /><em>Christian.</em></h1>
+          <p class="profile-description">Web developer. Saya membangun <strong>Sela</strong> dan berkarya bersama <strong>Limaraya</strong>.</p>
+          <div class="hero-actions">
+            <a class="hero-listen focus-ring" href="#karya">Lihat karya <span aria-hidden="true">↘</span></a>
+            <a class="hero-link focus-ring" href="https://github.com/bobbyfch" target="_blank" rel="noreferrer noopener">GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="profile-art" aria-hidden="true">
+          <span class="profile-orbit profile-orbit--one"></span>
+          <span class="profile-orbit profile-orbit--two"></span>
+          <span class="profile-monogram">BF</span>
+          <span class="profile-art-caption">WEB · MUSIC · STORIES</span>
+        </div>
+      </section>
+
+      <section id="karya" class="work-section" aria-labelledby="work-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow mb-3">Dibuat dengan rasa ingin tahu</p>
+            <h2 id="work-title" class="text-3xl font-semibold tracking-[-.055em] sm:text-4xl">Beberapa karya.</h2>
+          </div>
+          <span class="section-index" aria-hidden="true">01 / 02</span>
+        </div>
+        <div class="work-grid">
+          <article class="work-card work-card--sela">
+            <div class="work-card-top"><span class="work-tag">PRODUK DIGITAL</span><span class="work-number">01</span></div>
+            <div class="work-glyph work-glyph--sela" aria-hidden="true"><span>S</span><i></i><i></i><i></i></div>
+            <div>
+              <h3>Sela</h3>
+              <p>Pembaca buku pribadi yang mengutamakan koleksi lokal, ruang baca yang nyaman, dan kendali pengguna.</p>
+            </div>
+            <a class="work-link focus-ring" href="https://github.com/bobbyfch/sela" target="_blank" rel="noreferrer noopener">Lihat Sela di GitHub <span aria-hidden="true">↗</span></a>
+          </article>
+          <article class="work-card work-card--limaraya">
+            <div class="work-card-top"><span class="work-tag">MUSIK · YOGYAKARTA</span><span class="work-number">02</span></div>
+            <div class="work-glyph work-glyph--limaraya" aria-hidden="true"><span>L</span><i></i><i></i></div>
+            <div>
+              <h3>Limaraya</h3>
+              <p>Proyek musik indie pop dan R&amp;B. Dua album, ruang untuk jeda, rasa, dan cerita.</p>
+            </div>
+            <a class="work-link focus-ring" href="#limaraya">Jelajahi Limaraya <span aria-hidden="true">↘</span></a>
+          </article>
+        </div>
+      </section>
+
+      <section id="sosial" class="personal-social" aria-labelledby="personal-social-title">
+        <div>
+          <p class="eyebrow mb-3">Temukan saya</p>
+          <h2 id="personal-social-title" class="text-2xl font-semibold tracking-[-.05em]">Di internet.</h2>
+        </div>
+        <div class="personal-social-links">
+          {personalSocials.map((social) => (
+            <a class="personal-social-link focus-ring" href={social.href} target="_blank" rel="noreferrer noopener" aria-label={`${social.name}: ${social.note}`}>
+              <span class="social-icon" aria-hidden="true"><span>{social.mark}</span></span>
+              <span><strong>{social.name}</strong><small>{social.note}</small></span>
+              <span class="social-arrow" aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section id="limaraya" class="hero-stage" aria-labelledby="limaraya-title">
         <div class="hero-copy">
           <p class="eyebrow hero-kicker">Indie pop &amp; R&amp;B <span aria-hidden="true">/</span> Yogyakarta</p>
-          <h1 id="hero-title" class="hero-title">Lima suara,<br /><em>satu cerita.</em></h1>
+          <h2 id="limaraya-title" class="hero-title">Lima suara,<br /><em>satu cerita.</em></h2>
           <p class="hero-description">Dua album Limaraya: <i>Spektrum Rasa</i> dan <i>Anahata</i>. Dengarkan lewat platform pilihanmu.</p>
           <div class="hero-actions">
             <a class="hero-listen focus-ring" href="https://open.spotify.com/album/6NLGRRITjG1iuZdxcnC3Ea" target="_blank" rel="noreferrer noopener">
@@ -162,7 +230,7 @@ const morePlayers = [
         </div>
       </section>
 
-      <section id="cerita" class="grid gap-6 py-20 sm:grid-cols-[.7fr_1.3fr] sm:items-end sm:py-28" aria-labelledby="story-title">
+      <section id="cerita-limaraya" class="grid gap-6 py-20 sm:grid-cols-[.7fr_1.3fr] sm:items-end sm:py-28" aria-labelledby="story-title">
         <div>
           <p class="eyebrow mb-4">Tentang Limaraya</p>
           <h2 id="story-title" class="max-w-md text-4xl font-semibold leading-[1.06] tracking-[-.055em] sm:text-5xl">Indie pop dan R&amp;B dari Yogyakarta.</h2>
@@ -281,7 +349,7 @@ const morePlayers = [
         </div>
       </section>
 
-      <section id="sosial" class="grid gap-8 border-y border-[var(--line)] py-12 sm:grid-cols-[.7fr_1.3fr] sm:items-center sm:py-14" aria-labelledby="social-title">
+      <section id="sosial-limaraya" class="grid gap-8 border-y border-[var(--line)] py-12 sm:grid-cols-[.7fr_1.3fr] sm:items-center sm:py-14" aria-labelledby="social-title">
         <div>
           <p class="eyebrow mb-3">Kita ketemu di sana</p>
           <h2 id="social-title" class="text-2xl font-semibold tracking-[-.05em]">Ikuti hari-hari kami.</h2>
@@ -300,20 +368,19 @@ const morePlayers = [
 
       <section class="coming-panel" aria-labelledby="coming-title">
         <div>
-          <span class="eyebrow">Ruang ini masih tumbuh</span>
-          <h2 id="coming-title">More coming<br /><em>soon.</em></h2>
+          <span class="eyebrow">Cerita berikutnya</span>
+          <h2 id="coming-title">Terus<br /><em>bertumbuh.</em></h2>
         </div>
         <div>
-          <p>Kabar berikutnya menyusul. Untuk sekarang, temui Limaraya dan dengarkan dua album yang sudah ada.</p>
+          <p>Temui Limaraya dan dengarkan dua album yang sudah tersedia di platform pilihanmu.</p>
           <a class="focus-ring inline-flex min-h-12 items-center gap-3 border border-[var(--line)] bg-[var(--paper)] px-5 text-sm font-bold transition hover:-translate-y-0.5" href="https://linktr.ee/limaraya" target="_blank" rel="noreferrer noopener">Semua tautan Limaraya <span class="text-[var(--accent)]" aria-hidden="true">↗</span></a>
         </div>
       </section>
     </main>
 
     <footer class="page-shell flex flex-col gap-3 border-t border-[var(--line)] py-7 text-xs font-semibold text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
-      <a class="focus-ring w-fit rounded-sm tracking-[.16em] text-[var(--ink)]" href="#top">LIMARAYA</a>
-      <p>Dengan hangat, dari Yogyakarta · © {new Date().getFullYear()} Limaraya</p>
-      <p>Tampilan ikon platform kini seragam.</p>
+      <a class="focus-ring w-fit rounded-sm tracking-[.08em] text-[var(--ink)]" href="#top">BOBBY F. CHRISTIAN</a>
+      <p>Web developer · musik · cerita · © {new Date().getFullYear()}</p>
       <a class="focus-ring w-fit rounded-sm hover:text-[var(--accent)]" href="https://linktr.ee/limaraya" target="_blank" rel="noreferrer noopener">Linktree ↗</a>
     </footer>
 
