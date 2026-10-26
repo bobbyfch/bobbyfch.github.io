@@ -1,4 +1,4 @@
-export type PocketGameId =
+export type OriginalGameId =
   | "dot-dodge"
   | "egg-catch"
   | "frog-hop"
@@ -18,10 +18,11 @@ export type PocketGameId =
   | "zigzag";
 
 export type GameId =
+  | "bobs-adventure"
   | "computer-space"
   | "bertie"
   | "crt"
-  | PocketGameId
+  | OriginalGameId
   | "invaders"
   | "nimrod"
   | "oxo"
@@ -29,153 +30,168 @@ export type GameId =
   | "spacewar"
   | "tennis";
 
-export type PocketFamily = "dodge" | "catch" | "jump" | "shoot" | "maze" | "timing";
+export type ArcadeFamily = "dodge" | "catch" | "jump" | "shoot" | "maze" | "timing";
+export type GameArt = "pilot" | "board" | "target" | "dodge" | "basket" | "runner" | "shooter" | "alien" | "maze" | "jetpack" | "catch" | "laser" | "meteor" | "nim" | "paddle" | "timing" | "rescue" | "duel" | "tennis" | "jump" | "vault" | "wind" | "xeno" | "yoyo" | "trail";
 
 export interface GameDefinition {
   id: GameId;
   letter: string;
   name: string;
-  year: string;
   shortName: string;
   kind: string;
   description: string;
   controls: string;
-  source: string;
-  sourceUrl: string;
-  family?: PocketFamily;
+  art: GameArt;
+  palette: { background: string; primary: string; secondary: string; accent: string };
+  family?: ArcadeFamily;
 }
 
 export const games: GameDefinition[] = [
   {
-    id: "computer-space", letter: "A", name: "Asteroid Run · Computer Space", year: "1971", shortName: "ASTEROID RUN", kind: "ASTEROID FLIGHT",
-    description: "Steer through an asteroid field in a pocket-sized salute to Computer Space, the first commercial arcade video game.",
-    controls: "← → turn · ↑ thrust · SPACE fire", source: "Australian Centre for the Moving Image", sourceUrl: "https://www.acmi.net.au/works/118095--computer-space/",
+    id: "computer-space", letter: "A", name: "Astro Dash", shortName: "ASTRO DASH", kind: "STARFIELD FLIGHT", art: "pilot", palette: { background: "#17324a", primary: "#ffe8a6", secondary: "#5bc5c6", accent: "#f06b5d" },
+    description: "Thread a nimble starship through comet shards, then clear a path through the sky.",
+    controls: "← → turn · ↑ thrust · SPACE fire",
   },
   {
-    id: "bertie", letter: "B", name: "Bertie the Brain", year: "1950", shortName: "BERTIE", kind: "TIC-TAC-TOE",
-    description: "Take on the electronic brain in a quick round of noughts and crosses.",
-    controls: "Arrows move · SPACE or tap to choose", source: "Leaside Heritage Preservation Society", sourceUrl: "https://leasidelife.com/worlds-first-video-game-built-in-leaside/",
+    id: "bertie", letter: "B", name: "Botany Brawl", shortName: "BOTANY BRAWL", kind: "GARDEN STRATEGY", art: "board", palette: { background: "#354039", primary: "#f8e5a1", secondary: "#86c66f", accent: "#ed7580" },
+    description: "Outplant the garden bot in a quick three-in-a-row duel.",
+    controls: "Arrows move · SPACE or tap to plant",
   },
   {
-    id: "crt", letter: "C", name: "CRT Target Range", year: "1947", shortName: "CRT RANGE", kind: "AIM & FIRE",
-    description: "A modern target-game reimagining of the 1947 cathode-ray amusement-device patent. It was a design concept, not a released arcade game.",
-    controls: "Move the sight · SPACE or tap to fire", source: "1947 patent", sourceUrl: "https://patents.google.com/patent/US2455992A/en",
+    id: "crt", letter: "C", name: "Cloud Cannon", shortName: "CLOUD CANNON", kind: "TARGET SHOT", art: "target", palette: { background: "#24435c", primary: "#fff0bf", secondary: "#6dcae3", accent: "#f28b64" },
+    description: "Line up the sight and pop the drifting cloud targets before they float away.",
+    controls: "Move the sight · SPACE or tap to fire",
   },
   {
-    id: "dot-dodge", letter: "D", name: "Dot Dodge", year: "ORIGINAL", shortName: "DOT DODGE", kind: "DODGE",
-    description: "Slip between falling pixels and stay in the game until the timer runs out.",
-    controls: "← → move", source: "", sourceUrl: "", family: "dodge",
+    id: "dot-dodge", letter: "D", name: "Dandelion Drift", shortName: "DANDELION DRIFT", kind: "DODGE", art: "dodge", palette: { background: "#4b3441", primary: "#fff0bd", secondary: "#e9a75f", accent: "#ef7180" },
+    description: "Swerve between windblown seeds and stay aloft until the breeze settles.",
+    controls: "← → move", family: "dodge",
   },
   {
-    id: "egg-catch", letter: "E", name: "Egg Catch", year: "ORIGINAL", shortName: "EGG CATCH", kind: "CATCH",
-    description: "Catch the bright eggs, let the stones pass, and fill your basket.",
-    controls: "← → move · catch 10 eggs", source: "", sourceUrl: "", family: "catch",
+    id: "egg-catch", letter: "E", name: "Eggventure", shortName: "EGGVENTURE", kind: "CATCH", art: "basket", palette: { background: "#344454", primary: "#fff0bc", secondary: "#70cbb5", accent: "#efaa59" },
+    description: "Gather the painted eggs, dodge the pebbles, and fill your basket.",
+    controls: "← → move · catch 10 eggs", family: "catch",
   },
   {
-    id: "frog-hop", letter: "F", name: "Frog Hop", year: "ORIGINAL", shortName: "FROG HOP", kind: "JUMP & DODGE",
-    description: "Hop over traffic, grab the fireflies, and make it across the screen.",
-    controls: "← → move · ↑ or SPACE jump", source: "", sourceUrl: "", family: "jump",
+    id: "frog-hop", letter: "F", name: "Foxfire Hop", shortName: "FOXFIRE HOP", kind: "JUMP & DODGE", art: "runner", palette: { background: "#244a3c", primary: "#ffefb3", secondary: "#80c95d", accent: "#f6a34d" },
+    description: "Hop over forest paths, catch fireflies, and reach the other side.",
+    controls: "← → move · ↑ or SPACE jump", family: "jump",
   },
   {
-    id: "galaxy-guard", letter: "G", name: "Galaxy Guard", year: "ORIGINAL", shortName: "GALAXY GUARD", kind: "FIXED SHOOTER",
-    description: "Clear the incoming pixel fleet before it reaches your ship.",
-    controls: "← → move · SPACE fire", source: "", sourceUrl: "", family: "shoot",
+    id: "galaxy-guard", letter: "G", name: "Glimmer Guard", shortName: "GLIMMER GUARD", kind: "STAR SHOOTER", art: "shooter", palette: { background: "#243355", primary: "#fff0be", secondary: "#a591eb", accent: "#69cfe3" },
+    description: "Keep the night sky bright by turning back a mischievous star fleet.",
+    controls: "← → move · SPACE fire", family: "shoot",
   },
   {
-    id: "invaders", letter: "H", name: "Space Invaders", year: "1978", shortName: "INVADERS", kind: "FIXED SHOOTER",
-    description: "Hold the line against the descending formation in this monochrome arcade tribute.",
-    controls: "← → move · SPACE fire", source: "Taito Corporation", sourceUrl: "https://taito.co.jp/en/corporate/about/history",
+    id: "invaders", letter: "H", name: "Hollow Star", shortName: "HOLLOW STAR", kind: "FOREST DEFENSE", art: "alien", palette: { background: "#244446", primary: "#fff0b9", secondary: "#75cc95", accent: "#ef786e" },
+    description: "Defend the moon garden from a descending swarm of curious sprites.",
+    controls: "← → move · SPACE fire",
   },
   {
-    id: "ice-maze", letter: "I", name: "Ice Maze", year: "ORIGINAL", shortName: "ICE MAZE", kind: "MAZE RUN",
-    description: "Trace the open passages, pick up the stars, and find your way through the frozen grid.",
-    controls: "Arrow keys · collect 12 stars", source: "", sourceUrl: "", family: "maze",
+    id: "ice-maze", letter: "I", name: "Icebound Trail", shortName: "ICEBOUND TRAIL", kind: "MAZE RUN", art: "maze", palette: { background: "#2b465c", primary: "#fff2c4", secondary: "#6dc9dd", accent: "#a894e8" },
+    description: "Follow the frosted passages, collect the crystals, and find the way home.",
+    controls: "Arrow keys · collect 12 crystals", family: "maze",
   },
   {
-    id: "jetpack", letter: "J", name: "Jetpack Dash", year: "ORIGINAL", shortName: "JETPACK DASH", kind: "HOP & DODGE",
-    description: "Tap the thrusters to clear the gates and scoop up the floating stars.",
-    controls: "← → move · ↑ or SPACE boost", source: "", sourceUrl: "", family: "jump",
+    id: "jetpack", letter: "J", name: "Jade Jumper", shortName: "JADE JUMPER", kind: "JETPACK RUN", art: "jetpack", palette: { background: "#4b3341", primary: "#fff1c4", secondary: "#ed806f", accent: "#e8c35f" },
+    description: "Burst through jungle gates and scoop up the floating jade stars.",
+    controls: "← → move · ↑ or SPACE boost", family: "jump",
   },
   {
-    id: "keep-up", letter: "K", name: "Keep-Up Rally", year: "ORIGINAL", shortName: "KEEP-UP", kind: "CATCH",
-    description: "Keep a tiny ball in the air and catch it before it falls out of reach.",
-    controls: "← → move · catch 10 balls", source: "", sourceUrl: "", family: "catch",
+    id: "keep-up", letter: "K", name: "Kite Keeper", shortName: "KITE KEEPER", kind: "CATCH & KEEP", art: "catch", palette: { background: "#353752", primary: "#fff0c0", secondary: "#b198e6", accent: "#eac75d" },
+    description: "Keep your kite in the air and catch each gust before it slips away.",
+    controls: "← → move · catch 10 gusts", family: "catch",
   },
   {
-    id: "laser-lane", letter: "L", name: "Laser Lane", year: "ORIGINAL", shortName: "LASER LANE", kind: "DODGE",
-    description: "Read each warning line and weave through the laser gates.",
-    controls: "← → move", source: "", sourceUrl: "", family: "dodge",
+    id: "laser-lane", letter: "L", name: "Lantern Run", shortName: "LANTERN RUN", kind: "DODGE", art: "laser", palette: { background: "#44364c", primary: "#fff0c6", secondary: "#e27fb2", accent: "#73cde0" },
+    description: "Read the glowing gates and guide your lantern safely through the grove.",
+    controls: "← → move", family: "dodge",
   },
   {
-    id: "meteor-miner", letter: "M", name: "Meteor Miner", year: "ORIGINAL", shortName: "METEOR MINER", kind: "SHOOT & COLLECT",
-    description: "Break the drifting rocks into stardust before your fuel runs out.",
-    controls: "← → move · SPACE fire", source: "", sourceUrl: "", family: "shoot",
+    id: "meteor-miner", letter: "M", name: "Meteor Munch", shortName: "METEOR MUNCH", kind: "SHOOT & COLLECT", art: "meteor", palette: { background: "#4a3931", primary: "#fff0c1", secondary: "#efac61", accent: "#ed705f" },
+    description: "Break the wandering meteors into bright stardust before time runs out.",
+    controls: "← → move · SPACE fire", family: "shoot",
   },
   {
-    id: "nimrod", letter: "N", name: "Nimrod", year: "1951", shortName: "NIMROD", kind: "TAKE-AWAY",
-    description: "A Nim strategy match inspired by the computer built to demonstrate Nim at the 1951 Festival of Britain.",
-    controls: "← → choose pile · ↑ ↓ set amount · SPACE take", source: "Computer History Museum", sourceUrl: "https://www.computerhistory.org/timeline/graphics-games/",
+    id: "nimrod", letter: "N", name: "Nimble Grove", shortName: "NIMBLE GROVE", kind: "TAKE-AWAY STRATEGY", art: "nim", palette: { background: "#29483d", primary: "#fff0bc", secondary: "#72c6a4", accent: "#eebd5b" },
+    description: "Take turns gathering branches from the grove. Plan ahead to take the last one.",
+    controls: "← → choose pile · ↑ ↓ set amount · SPACE take",
   },
   {
-    id: "oxo", letter: "O", name: "OXO", year: "1952", shortName: "OXO", kind: "TIC-TAC-TOE",
-    description: "Play noughts and crosses against the EDSAC-inspired computer. Choose who takes the first turn.",
-    controls: "Arrows move · SPACE or tap to choose", source: "Computer History Museum", sourceUrl: "https://www.computerhistory.org/timeline/graphics-games/",
+    id: "oxo", letter: "O", name: "Orchard Orbit", shortName: "ORCHARD ORBIT", kind: "GARDEN STRATEGY", art: "board", palette: { background: "#34445a", primary: "#fff1bd", secondary: "#83aee8", accent: "#e98088" },
+    description: "Set a course through the orchard and beat the clever little keeper.",
+    controls: "Arrows move · SPACE or tap to choose",
   },
   {
-    id: "pong", letter: "P", name: "Pong", year: "1972", shortName: "PONG", kind: "TABLE TENNIS",
-    description: "Keep the ball in play and get it past the opposing paddle.",
-    controls: "↑ ↓ move paddle · SPACE serve", source: "Smithsonian National Museum of American History", sourceUrl: "https://www.si.edu/spotlight/the-father-of-the-video-game-the-ralph-baer-prototypes-and-electronic-games/video-game-history",
+    id: "pong", letter: "P", name: "Pogo Paddle", shortName: "POGO PADDLE", kind: "PADDLE RALLY", art: "paddle", palette: { background: "#254c49", primary: "#fff1c0", secondary: "#65cbb4", accent: "#f1c560" },
+    description: "Trade quick returns across the pond and send the ball past the other paddle.",
+    controls: "↑ ↓ move paddle · SPACE serve",
   },
   {
-    id: "quick-draw", letter: "Q", name: "Quick Draw", year: "ORIGINAL", shortName: "QUICK DRAW", kind: "TIMING",
-    description: "Wait for the center mark, then press at just the right moment. Three strikes and you are out.",
-    controls: "SPACE when the marker enters the box", source: "", sourceUrl: "", family: "timing",
+    id: "quick-draw", letter: "Q", name: "Quickstep Quokka", shortName: "QUICKSTEP QUOKKA", kind: "TIMING", art: "timing", palette: { background: "#4d392f", primary: "#fff0bd", secondary: "#eab95b", accent: "#ed7663" },
+    description: "Wait for the signal, then tap in time with the quickstep beat.",
+    controls: "SPACE when the marker enters the target", family: "timing",
   },
   {
-    id: "rocket-rescue", letter: "R", name: "Rocket Rescue", year: "ORIGINAL", shortName: "ROCKET RESCUE", kind: "DODGE & RESCUE",
-    description: "Guide the rescue capsule through a meteor shower and keep the crew safe.",
-    controls: "← → move", source: "", sourceUrl: "", family: "dodge",
+    id: "rocket-rescue", letter: "R", name: "Reef Runner", shortName: "REEF RUNNER", kind: "DODGE & RESCUE", art: "rescue", palette: { background: "#284754", primary: "#fff2c5", secondary: "#67c7dc", accent: "#ef846e" },
+    description: "Guide a tiny sub through falling coral and bring the crew back safely.",
+    controls: "← → move", family: "dodge",
   },
   {
-    id: "spacewar", letter: "S", name: "Spacewar!", year: "1962", shortName: "SPACEWAR!", kind: "SPACE DUEL",
-    description: "Pilot a tiny ship in a one-player duel inspired by the two-ship PDP-1 game from MIT.",
-    controls: "← → turn · ↑ thrust · SPACE fire", source: "Computer History Museum", sourceUrl: "https://www.computerhistory.org/pdp-1/spacewar/",
+    id: "spacewar", letter: "S", name: "Stardust Skirmish", shortName: "STARDUST SKIRMISH", kind: "STARSHIP DUEL", art: "duel", palette: { background: "#2b3154", primary: "#fff0c5", secondary: "#9d98e3", accent: "#ec8e9b" },
+    description: "Pilot, turn, and boost through a one-on-one starship duel.",
+    controls: "← → turn · ↑ thrust · SPACE fire",
   },
   {
-    id: "tennis", letter: "T", name: "Tennis for Two", year: "1958", shortName: "TENNIS", kind: "RALLY",
-    description: "A compact browser reimagining of the oscilloscope tennis exhibit shown at Brookhaven in 1958.",
-    controls: "← → aim · SPACE hit", source: "Brookhaven National Laboratory", sourceUrl: "https://www.bnl.gov/about/history/firstvideo.php",
+    id: "tennis", letter: "T", name: "Treetop Rally", shortName: "TREETOP RALLY", kind: "RACKET RALLY", art: "tennis", palette: { background: "#443451", primary: "#fff0ca", secondary: "#e99bd0", accent: "#70cfdd" },
+    description: "Pick your angle and keep the treetop rally moving.",
+    controls: "← → aim · SPACE hit",
   },
   {
-    id: "updraft", letter: "U", name: "Updraft", year: "ORIGINAL", shortName: "UPDRAFT", kind: "HOP & DODGE",
-    description: "Ride the updraft, stay clear of the clouds, and gather the high-flying stars.",
-    controls: "← → move · ↑ or SPACE boost", source: "", sourceUrl: "", family: "jump",
+    id: "updraft", letter: "U", name: "Updraft", shortName: "UPDRAFT", kind: "HOP & DODGE", art: "wind", palette: { background: "#2b4a5c", primary: "#fff2c3", secondary: "#70c2de", accent: "#f1d167" },
+    description: "Ride the warm air, dodge the clouds, and collect the high-flying stars.",
+    controls: "← → move · ↑ or SPACE boost", family: "jump",
   },
   {
-    id: "vault", letter: "V", name: "Vault Jump", year: "ORIGINAL", shortName: "VAULT JUMP", kind: "HOP & DODGE",
-    description: "Jump each low barrier, land cleanly, and collect enough tokens to open the vault.",
-    controls: "← → move · ↑ or SPACE jump", source: "", sourceUrl: "", family: "jump",
+    id: "vault", letter: "V", name: "Velvet Vault", shortName: "VELVET VAULT", kind: "JUMP & COLLECT", art: "vault", palette: { background: "#4b3d2f", primary: "#fff2c2", secondary: "#e6bd61", accent: "#df7c6b" },
+    description: "Leap each barrier, gather the tokens, and open the old garden vault.",
+    controls: "← → move · ↑ or SPACE jump", family: "jump",
   },
   {
-    id: "word-rush", letter: "W", name: "Word Rush", year: "ORIGINAL", shortName: "WORD RUSH", kind: "TIMING",
-    description: "Stop the cursor on the word-sized target before the signal slips away.",
-    controls: "SPACE when the marker enters the box", source: "", sourceUrl: "", family: "timing",
+    id: "word-rush", letter: "W", name: "Wildwood Whistle", shortName: "WILDWOOD WHISTLE", kind: "TIMING", art: "timing", palette: { background: "#354654", primary: "#fff0c4", secondary: "#8cb6df", accent: "#e784b5" },
+    description: "Stop the whistle on its mark and wake the sleepy woodland.",
+    controls: "SPACE when the marker enters the target", family: "timing",
   },
   {
-    id: "xeno-sweep", letter: "X", name: "Xeno Sweep", year: "ORIGINAL", shortName: "XENO SWEEP", kind: "SHOOTER",
-    description: "Sweep the sky clear of visitors and keep their ships from getting past you.",
-    controls: "← → move · SPACE fire", source: "", sourceUrl: "", family: "shoot",
+    id: "xeno-sweep", letter: "X", name: "Xeno Bloom", shortName: "XENO BLOOM", kind: "GARDEN SHOOTER", art: "xeno", palette: { background: "#393454", primary: "#fff0c5", secondary: "#bd8fde", accent: "#67d2bd" },
+    description: "Sweep the sky clear of seed ships before they reach the flower beds.",
+    controls: "← → move · SPACE fire", family: "shoot",
   },
   {
-    id: "yo-yo", letter: "Y", name: "Yo-Yo Timing", year: "ORIGINAL", shortName: "YO-YO", kind: "TIMING",
-    description: "Catch the yo-yo at the bottom of its swing and keep a perfect rhythm.",
-    controls: "SPACE when the marker enters the box", source: "", sourceUrl: "", family: "timing",
+    id: "yo-yo", letter: "Y", name: "Yeti Yo-Yo", shortName: "YETI YO-YO", kind: "RHYTHM TIMING", art: "yoyo", palette: { background: "#433750", primary: "#fff1c9", secondary: "#e0a5d7", accent: "#6dcfc3" },
+    description: "Catch the yo-yo at the bottom of its swing and keep a mountain rhythm.",
+    controls: "SPACE when the marker enters the target", family: "timing",
   },
   {
-    id: "zigzag", letter: "Z", name: "Zigzag Run", year: "ORIGINAL", shortName: "ZIGZAG RUN", kind: "MAZE RUN",
-    description: "Turn at the corners, follow the little trail, and collect every last pixel.",
-    controls: "Arrow keys · collect 12 stars", source: "", sourceUrl: "", family: "maze",
+    id: "zigzag", letter: "Z", name: "Zephyr Zigzag", shortName: "ZEPHYR ZIGZAG", kind: "MAZE RUN", art: "trail", palette: { background: "#343b55", primary: "#fff0c5", secondary: "#a7a0df", accent: "#efb170" },
+    description: "Wind through the switchback trail and gather every last firefly.",
+    controls: "Arrow keys · collect 12 fireflies", family: "maze",
   },
 ];
 
-export const pocketGames = games.filter((game) => game.year === "ORIGINAL");
+export const featuredAdventure: GameDefinition = {
+  id: "bobs-adventure",
+  letter: "★",
+  name: "Bob’s Adventure",
+  shortName: "BOB’S ADVENTURE",
+  kind: "25-LEVEL PLATFORMER",
+  description: "Cross 25 levels inspired by Indonesia’s rice terraces, volcanoes, islands, rainforests, and highlands. Run, jump, collect coins, and find the exit.",
+  controls: "← → move · ↑ or SPACE jump · ↓ drop through",
+  art: "runner",
+  palette: { background: "#56bfdc", primary: "#fff0c5", secondary: "#63bd65", accent: "#f57546" },
+  family: "jump",
+};
+
+export function getGameDefinition(id: GameId) {
+  return id === "bobs-adventure" ? featuredAdventure : games.find((game) => game.id === id);
+}

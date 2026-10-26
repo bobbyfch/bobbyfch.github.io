@@ -1,4 +1,5 @@
-import { games, type GameId, type PocketFamily, type PocketGameId } from "./catalog";
+import { games, type GameId, type ArcadeFamily, type OriginalGameId } from "./catalog";
+import { adventureStatus, createBobAdventure, updateBobAdventure, type BobAdventureModel } from "./bobs-adventure";
 
 export type GamePhase = "ready" | "playing" | "won" | "over";
 export type GameAction = "left" | "right" | "up" | "down" | "action";
@@ -87,7 +88,7 @@ interface InvadersModel extends BaseModel {
   lives: number;
 }
 
-interface PocketObject {
+interface OriginalObject {
   x: number;
   y: number;
   kind: "hazard" | "target";
@@ -95,21 +96,21 @@ interface PocketObject {
   drift: number;
 }
 
-interface PocketDot {
+interface OriginalDot {
   column: number;
   row: number;
   collected: boolean;
 }
 
-interface PocketModel extends BaseModel {
-  id: PocketGameId;
-  family: PocketFamily;
+interface OriginalModel extends BaseModel {
+  id: OriginalGameId;
+  family: ArcadeFamily;
   playerX: number;
   playerY: number;
   velocityY: number;
-  objects: PocketObject[];
+  objects: OriginalObject[];
   bullets: Array<{ x: number; y: number }>;
-  dots: PocketDot[];
+  dots: OriginalDot[];
   lives: number;
   elapsed: number;
   spawnClock: number;
@@ -128,9 +129,10 @@ export type ArcadeModel =
   | ComputerSpaceModel
   | PongModel
   | InvadersModel
-  | PocketModel;
+  | BobAdventureModel
+  | OriginalModel;
 
-function isPocketModel(model: ArcadeModel): model is PocketModel {
+function isOriginalModel(model: ArcadeModel): model is OriginalModel {
   return "family" in model;
 }
 
@@ -334,11 +336,11 @@ function mazeWall(column: number, row: number) {
   return walls[row]?.[column] === "#";
 }
 
-function newPocket(id: PocketGameId): PocketModel {
+function newOriginal(id: OriginalGameId): OriginalModel {
   const definition = games.find((game) => game.id === id);
   const family = definition?.family;
-  if (!family) throw new Error("The pocket game is missing its play style.");
-  const dots: PocketDot[] = [];
+  if (!family) throw new Error("The original game is missing its play style.");
+  const dots: OriginalDot[] = [];
   if (family === "maze") {
     for (let row = 0; row < 8; row += 1) {
       for (let column = 0; column < 16; column += 1) {
@@ -370,6 +372,7 @@ function newPocket(id: PocketGameId): PocketModel {
 
 export function createModel(id: GameId, computerFirst = false): ArcadeModel {
   switch (id) {
+    case "bobs-adventure": return createBobAdventure();
     case "crt": return newCRT();
     case "bertie":
     case "oxo": return makeBoard(id, computerFirst);
@@ -379,7 +382,7 @@ export function createModel(id: GameId, computerFirst = false): ArcadeModel {
     case "computer-space": return newComputerSpace();
     case "pong": return newPong();
     case "invaders": return newInvaders();
-    default: return newPocket(id);
+    default: return newOriginal(id);
   }
 }
 
@@ -388,7 +391,7 @@ export class ArcadeSimulation {
   private fireQueued = false;
   private pointer = { x: WIDTH / 2, y: HEIGHT / 2 };
 
-  constructor(id: GameId = "invaders") {
+  constructor(id: GameId = "bobs-adventure") {
     this.model = createModel(id);
   }
 
@@ -419,7 +422,7 @@ export class ArcadeSimulation {
     if (this.model.id === "crt") {
       this.model.reticle.x = this.pointer.x;
       this.model.reticle.y = this.pointer.y;
-    } else if (isPocketModel(this.model) && this.model.family !== "maze" && this.model.family !== "timing") {
+    } else if (isOriginalModel(this.model) && this.model.family !== "maze" && this.model.family !== "timing") {
       this.model.playerX = this.pointer.x;
     }
   }
@@ -427,6 +430,23 @@ export class ArcadeSimulation {
   action(action: GameAction) {
     if (this.model.phase !== "playing") return;
     const model = this.model;
+    if (model.id === "bobs-adventure") {
+      if (action === "up" || action === "action") {
+        model.jumpQueued = true;
+      } else if (action === "left" || action === "right") {
+        const direction = action === "left" ? -1 : 1;
+        model.player.facing = direction;
+        model.tapMoveDirection = direction;
+        model.tapMoveTimer = 110;
+      } else if (action === "down" && model.player.grounded) {
+        model.dropTimer = 180;
+        model.coyoteTime = 0;
+        model.jumpBuffer = 0;
+        model.player.grounded = false;
+        model.player.y += 3;
+      }
+      return;
+    }
     if (model.id === "crt") {
       if (action === "action") this.fireQueued = true;
       return;
@@ -454,11 +474,15 @@ export class ArcadeSimulation {
     this.setPointer(x, y);
     const model = this.model;
     if (model.phase !== "playing") return;
+    if (model.id === "bobs-adventure") {
+      model.jumpQueued = true;
+      return;
+    }
     if (model.id === "bertie" || model.id === "oxo") {
       const column = Math.floor((x - 130) / 126);
       const row = Math.floor((y - 48) / 88);
       if (column >= 0 && column < 3 && row >= 0 && row < 3) this.playBoardCell(row * 3 + column);
-    } else if (isPocketModel(model)) {
+    } else if (isOriginalModel(model)) {
       this.fireQueued = true;
     } else if (model.id === "crt" || model.id === "tennis" || model.id === "spacewar" || model.id === "computer-space" || model.id === "invaders") {
       this.fireQueued = true;
@@ -527,7 +551,9 @@ export class ArcadeSimulation {
     }
     const seconds = Math.min(delta, 40) / 1000;
 
-    if (model.id === "bertie" || model.id === "oxo") {
+    if (model.id === "bobs-adventure") {
+      updateBobAdventure(model, delta, held);
+    } else if (model.id === "bertie" || model.id === "oxo") {
       if (model.turn === "computer") {
         model.aiDelay -= delta;
         if (model.aiDelay <= 0) this.computerBoardTurn(model);
@@ -615,13 +641,13 @@ export class ArcadeSimulation {
       this.updatePong(model, seconds, held);
     } else if (model.id === "invaders") {
       this.updateInvaders(model, seconds, delta, held);
-    } else if (isPocketModel(model)) {
-      this.updatePocket(model, seconds, delta, held);
+    } else if (isOriginalModel(model)) {
+      this.updateOriginal(model, seconds, delta, held);
     }
     this.fireQueued = false;
   }
 
-  private updatePocket(model: PocketModel, seconds: number, delta: number, held: ActionSet) {
+  private updateOriginal(model: OriginalModel, seconds: number, delta: number, held: ActionSet) {
     const { family } = model;
     model.elapsed += delta;
 
@@ -725,7 +751,7 @@ export class ArcadeSimulation {
       });
     }
 
-    const nextObjects: PocketObject[] = [];
+    const nextObjects: OriginalObject[] = [];
     for (const object of model.objects) {
       if (family === "jump") {
         object.x += object.drift * seconds;
@@ -1040,7 +1066,8 @@ export class ArcadeSimulation {
 
   get status() {
     const model = this.model;
-    if (isPocketModel(model)) {
+    if (model.id === "bobs-adventure") return adventureStatus(model);
+    if (isOriginalModel(model)) {
       if (model.family === "maze") return "STARS " + String(model.score).padStart(2, "0") + " / 12";
       if (model.family === "timing") return "HITS " + model.score + " / 8 · " + model.lives + " LIVES";
       return "SCORE " + String(model.score).padStart(2, "0") + " · " + model.lives + " LIVES";

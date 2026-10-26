@@ -1,57 +1,59 @@
-import { games, type GameId } from "../games/catalog";
+import { featuredAdventure, games, getGameDefinition, type GameId } from "../games/catalog";
 import type { ArcadeController } from "../games/arcade-scene";
 
 const themeToggle = document.querySelector<HTMLButtonElement>("#theme-toggle");
 const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-const viewButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-view]"));
-const panels = Array.from(document.querySelectorAll<HTMLElement>("[role='tabpanel']"));
-const gameButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-game-select]"));
+const gameButtons = Array.from(document.querySelectorAll<HTMLButtonElement>(".game-choice"));
+const featuredPlayButton = document.querySelector<HTMLButtonElement>(".feature-play");
 const gameTitle = document.querySelector<HTMLElement>("#selected-game-name");
 const gameDescription = document.querySelector<HTMLElement>("#game-description");
-const gameSource = document.querySelector<HTMLAnchorElement>("#game-source");
 const gameStatus = document.querySelector<HTMLOutputElement>("#arcade-status");
-const gamePicker = document.querySelector<HTMLElement>("#game-picker");
-const previousGameButton = document.querySelector<HTMLButtonElement>("#game-picker-prev");
-const nextGameButton = document.querySelector<HTMLButtonElement>("#game-picker-next");
+const arcadeStage = document.querySelector<HTMLElement>("#arcade-stage");
 const gameOverlay = document.querySelector<HTMLElement>("#game-overlay");
 const overlayKicker = document.querySelector<HTMLElement>("#overlay-kicker");
+const overlayTitle = document.querySelector<HTMLElement>("#overlay-title");
 const overlayMessage = document.querySelector<HTMLElement>("#overlay-message");
 const startButton = document.querySelector<HTMLButtonElement>("#game-start");
 const stage = document.querySelector<HTMLElement>("#arcade-canvas");
 const controlsCopy = document.querySelector<HTMLElement>("#controls-copy");
 const firstTurnToggle = document.querySelector<HTMLButtonElement>("#first-turn-toggle");
 const actionLabel = document.querySelector<HTMLElement>("#action-label");
+const upControl = document.querySelector<HTMLButtonElement>('[data-action="up"]');
+const downControl = document.querySelector<HTMLButtonElement>('[data-action="down"]');
 
 let controller: ArcadeController | undefined;
 let booting: Promise<ArcadeController> | undefined;
-let selectedGame: GameId = games[0]?.id ?? "invaders";
+let selectedGame: GameId = featuredAdventure.id;
 let computerFirst = false;
 
 function applyTheme(theme: "light" | "dark") {
   document.documentElement.dataset.theme = theme;
   themeToggle?.setAttribute("aria-pressed", String(theme === "dark"));
   themeToggle?.setAttribute("aria-label", theme === "dark" ? "Switch to light theme" : "Switch to dark theme");
-  if (themeColor) themeColor.content = theme === "dark" ? "#111111" : "#f7f7f5";
+  if (themeColor) themeColor.content = theme === "dark" ? "#141a29" : "#fff8ea";
 }
 
-function setView(view: string) {
-  for (const button of viewButtons) {
-    const active = button.dataset.view === view;
-    button.classList.toggle("is-active", active);
-    button.setAttribute("aria-selected", String(active));
-    button.tabIndex = active ? 0 : -1;
+function setState(model: import("../games/arcade-simulation").ArcadeModel, status: string) {
+  const { phase, message } = model;
+  const definition = getGameDefinition(model.id);
+  if (gameStatus && definition) {
+    const position = String(games.findIndex((game) => game.id === definition.id) + 1).padStart(2, "0");
+    gameStatus.textContent = phase === "playing" ? status : definition.id === "bobs-adventure" ? "LEVEL " + String(model.level).padStart(2, "0") + " / 25" : position + " / " + games.length + " · ORIGINAL";
   }
-  for (const panel of panels) panel.classList.toggle("is-active", panel.id === "panel-" + view);
-}
-
-function setState(phase: string, message: string, status: string) {
-  if (gameStatus) gameStatus.textContent = phase === "playing" ? status : phase.toUpperCase();
+  if (gameDescription && definition) {
+    gameDescription.textContent = model.id === "bobs-adventure" && phase !== "ready"
+      ? model.levelName + " · " + definition.description
+      : definition.description;
+  }
+  if (overlayTitle && definition) overlayTitle.textContent = definition.name;
   if (overlayKicker) {
-    overlayKicker.textContent = phase === "ready" ? "READY PLAYER" : phase === "won" ? "WELL PLAYED" : phase === "over" ? "GAME OVER" : "";
+    overlayKicker.textContent = model.id === "bobs-adventure"
+      ? phase === "ready" ? "LEVEL 01 / 25" : phase === "won" ? "ADVENTURE COMPLETE" : phase === "over" ? "TRY AGAIN" : ""
+      : phase === "ready" ? "READY TO PLAY" : phase === "won" ? "NICE RUN" : phase === "over" ? "ROUND COMPLETE" : "";
   }
   if (overlayMessage) overlayMessage.textContent = message;
   if (gameOverlay) gameOverlay.hidden = phase === "playing";
-  if (startButton) startButton.innerHTML = phase === "ready" ? "<span aria-hidden='true'>▶</span> START GAME" : "<span aria-hidden='true'>↻</span> PLAY AGAIN";
+  if (startButton) startButton.innerHTML = phase === "ready" ? "<span aria-hidden='true'>▶</span> PLAY" : "<span aria-hidden='true'>↻</span> PLAY AGAIN";
   stage?.setAttribute("aria-label", "Arcade playfield. " + message + " " + status);
 }
 
@@ -61,8 +63,8 @@ async function loadArcade() {
     booting = import("../games/arcade-scene")
       .then(({ bootArcade }) => {
         if (!stage) throw new Error("Arcade playfield is missing.");
-        controller = bootArcade(stage, (model, status) => setState(model.phase, model.message, status));
-        controller.select(selectedGame);
+        controller = bootArcade(stage, setState);
+        controller.select(selectedGame, computerFirst);
         return controller;
       })
       .catch((error: unknown) => {
@@ -79,46 +81,49 @@ async function loadArcade() {
 }
 
 function selectGame(id: GameId) {
-  const definition = games.find((game) => game.id === id);
+  const definition = getGameDefinition(id);
   if (!definition) return;
   selectedGame = id;
+  if (arcadeStage) {
+    arcadeStage.dataset.gameId = definition.id;
+    arcadeStage.style.setProperty("--stage-bg", definition.palette.background);
+    arcadeStage.style.setProperty("--stage-light", definition.palette.secondary);
+  }
   computerFirst = false;
   for (const button of gameButtons) button.setAttribute("aria-pressed", String(button.dataset.gameSelect === id));
-  const selectedButton = gameButtons.find((button) => button.dataset.gameSelect === id);
-  if (selectedButton && gamePicker) {
-    const target = selectedButton.offsetLeft + selectedButton.offsetWidth / 2 - gamePicker.clientWidth / 2;
-    gamePicker.scrollTo({ left: target, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-  }
-  if (gameTitle) gameTitle.textContent = definition.shortName;
+  if (gameTitle) gameTitle.textContent = definition.name;
+  if (overlayTitle) overlayTitle.textContent = definition.name;
   if (gameDescription) gameDescription.textContent = definition.description;
-  if (gameSource) {
-    gameSource.href = definition.sourceUrl;
-    gameSource.setAttribute("aria-label", "Read historical background from " + definition.source);
-    gameSource.hidden = !definition.sourceUrl;
-  }
   if (controlsCopy) controlsCopy.textContent = definition.controls + " · Press ENTER to start";
   if (actionLabel) {
-    actionLabel.textContent = id === "pong" ? "SERVE"
+    actionLabel.textContent = id === "bobs-adventure" ? "JUMP"
+      : id === "pong" ? "SERVE"
       : id === "bertie" || id === "oxo" || id === "nimrod" ? "SELECT"
         : definition.family === "timing" ? "HIT"
           : definition.family === "jump" ? "JUMP"
             : definition.family === "shoot" || id === "crt" || id === "spacewar" || id === "computer-space" || id === "invaders" ? "FIRE"
               : definition.family === "catch" ? "CATCH" : "GO";
   }
+  upControl?.setAttribute("aria-label", id === "bobs-adventure" ? "Jump" : "Move up or thrust");
+  downControl?.setAttribute("aria-label", id === "bobs-adventure" ? "Drop through a platform" : "Move down");
   if (firstTurnToggle) {
     firstTurnToggle.hidden = id !== "oxo";
     firstTurnToggle.textContent = "YOU MOVE FIRST";
     firstTurnToggle.setAttribute("aria-pressed", "false");
   }
   if (gameStatus) {
-    const position = String(games.indexOf(definition) + 1).padStart(2, "0");
-    gameStatus.textContent = definition.letter + " · " + position + "/" + games.length + (definition.year === "ORIGINAL" ? " · POCKET" : " · " + definition.year);
+    const position = String(games.findIndex((game) => game.id === id) + 1).padStart(2, "0");
+    gameStatus.textContent = id === "bobs-adventure" ? "LEVEL 01 / 25" : position + " / " + games.length + " · ORIGINAL";
   }
-  if (overlayKicker) overlayKicker.textContent = "A LITTLE ARCADE HISTORY";
+  if (overlayKicker) overlayKicker.textContent = "ORIGINAL GAME";
   if (overlayMessage) overlayMessage.textContent = definition.description;
   if (gameOverlay) gameOverlay.hidden = false;
-  if (startButton) startButton.innerHTML = "<span aria-hidden='true'>▶</span> START GAME";
+  if (startButton) startButton.innerHTML = "<span aria-hidden='true'>▶</span> PLAY";
   if (controller) controller.select(id);
+  arcadeStage?.scrollIntoView({
+    behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    block: "center",
+  });
 }
 
 applyTheme(document.documentElement.dataset.theme === "dark" ? "dark" : "light");
@@ -131,21 +136,6 @@ themeToggle?.addEventListener("click", () => {
     // The theme still changes for this page view if storage is unavailable.
   }
 });
-
-for (const button of viewButtons) {
-  button.addEventListener("click", () => setView(button.dataset.view ?? "orbit"));
-  button.addEventListener("keydown", (event) => {
-    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-    event.preventDefault();
-    const current = viewButtons.indexOf(button);
-    const next = event.key === "ArrowRight" ? (current + 1) % viewButtons.length : (current + viewButtons.length - 1) % viewButtons.length;
-    const nextButton = viewButtons[next];
-    if (nextButton) {
-      setView(nextButton.dataset.view ?? "orbit");
-      nextButton.focus();
-    }
-  });
-}
 
 for (const button of gameButtons) {
   button.addEventListener("click", () => {
@@ -167,21 +157,19 @@ for (const button of gameButtons) {
   });
 }
 
-function selectAdjacentGame(direction: -1 | 1) {
-  const current = games.findIndex((game) => game.id === selectedGame);
-  const next = games[(current + direction + games.length) % games.length];
-  if (next) selectGame(next.id);
-}
-
-previousGameButton?.addEventListener("click", () => selectAdjacentGame(-1));
-nextGameButton?.addEventListener("click", () => selectAdjacentGame(1));
+featuredPlayButton?.addEventListener("click", () => {
+  const id = featuredPlayButton.dataset.featureGame as GameId | undefined;
+  if (!id) return;
+  selectGame(id);
+  startButton?.click();
+});
 
 startButton?.addEventListener("click", async () => {
   startButton.disabled = true;
   if (gameStatus) gameStatus.textContent = "LOADING";
   try {
     const arcade = await loadArcade();
-    arcade.select(selectedGame);
+    arcade.select(selectedGame, computerFirst);
     arcade.start();
     stage?.focus({ preventScroll: true });
   } catch {
@@ -204,6 +192,7 @@ window.addEventListener("keydown", (event) => {
   if (!(active instanceof HTMLElement) || active.id !== "arcade-canvas") return;
   event.preventDefault();
   if (gameOverlay?.hidden || !controller) return;
-  if (overlayKicker?.textContent === "READY PLAYER" || overlayKicker?.textContent === "A LITTLE ARCADE HISTORY") controller.start();
+  if (overlayKicker?.textContent === "READY TO PLAY" || overlayKicker?.textContent === "ORIGINAL GAME") controller.start();
   else controller.restart();
+  event.stopImmediatePropagation();
 });

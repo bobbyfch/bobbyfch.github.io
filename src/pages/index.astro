@@ -1,10 +1,12 @@
 ---
 import "../styles/global.css";
 import { ArrowUpRight, Moon, Sun } from "@lucide/astro";
-import { games } from "../games/catalog";
-import { socialPlanets } from "../games/socials";
+import { featuredAdventure, games } from "../games/catalog";
+import { gameCoverArt } from "../games/cover-art";
+import { socialLinks } from "../games/socials";
 
-const firstGame = games[0]!;
+const firstGame = featuredAdventure;
+const featuredGame = firstGame;
 ---
 
 <!doctype html>
@@ -12,18 +14,18 @@ const firstGame = games[0]!;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#f7f7f5" />
+    <meta name="theme-color" content="#fff8ea" />
     <meta name="author" content="Bobby Fajar Christian" />
-    <meta name="description" content="A monochrome solar system by Bobby Fajar Christian. Explore rotating social planets, play 26 pocket arcade games from A to Z, and reach Limaraya.com." />
+    <meta name="description" content="Play Bob’s Adventure across 25 levels inspired by Indonesia’s rice terraces, volcanoes, islands, rainforests, and highlands, plus 26 original arcade games." />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Bobby Fajar Christian · Solar System" />
-    <meta property="og:description" content="Rotating social planets, 26 tiny arcade games from A to Z, and one bright route to Limaraya.com." />
+    <meta property="og:title" content="Bob’s Adventure · Bobby Fajar Christian" />
+    <meta property="og:description" content="Explore 25 Indonesian-inspired platforming levels, then choose from 26 original arcade games." />
     <meta property="og:url" content="https://bobbyfch.github.io/" />
     <meta property="og:site_name" content="Bobby Fajar Christian" />
     <meta name="twitter:card" content="summary" />
     <link rel="canonical" href="https://bobbyfch.github.io/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Bobby Fajar Christian · Welcome to my Solar System</title>
+    <title>Bob’s Adventure · Bobby Fajar Christian</title>
     <script is:inline>
       try {
         const savedTheme = localStorage.getItem("bobby-space-theme");
@@ -35,15 +37,16 @@ const firstGame = games[0]!;
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to the solar system</a>
+    <a class="skip-link" href="#main">Skip to the main content</a>
 
     <div class="site-shell">
       <header class="site-header">
-        <a class="wordmark" href="#main" aria-label="Bobby Fajar Christian, home">
-          <span class="wordmark-mark" aria-hidden="true">BFC</span>
-          <span>BOBBY FAJAR CHRISTIAN</span>
-        </a>
-        <div class="header-status"><span class="status-dot" aria-hidden="true"></span> PERSONAL ORBIT · BFC</div>
+        <a class="wordmark" href="#main">Bobby Fajar Christian</a>
+        <nav class="header-nav" aria-label="Main navigation">
+          <a href="#arcade">ARCADE <span class="nav-count">26</span></a>
+          <a href="#social">ELSEWHERE</a>
+          <a class="header-nav-feature" href="https://limaraya.com/">LIMARAYA <ArrowUpRight aria-hidden="true" /></a>
+        </nav>
         <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false">
           <Sun class="theme-icon theme-icon--sun" aria-hidden="true" />
           <Moon class="theme-icon theme-icon--moon" aria-hidden="true" />
@@ -52,116 +55,121 @@ const firstGame = games[0]!;
       </header>
 
       <main id="main" class="main-content">
-        <section class="intro" aria-labelledby="page-title">
-          <div class="intro-copy">
-            <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> A LITTLE CORNER OF MY UNIVERSE</p>
-            <h1 id="page-title">Welcome to my <span>Solar System.</span></h1>
-            <p class="intro-description">I’m Bobby Fajar Christian. Follow a planet, play a little game, and make yourself at home.</p>
+        <section class="hero" aria-labelledby="page-title">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> BOBBY FAJAR CHRISTIAN <span class="eyebrow-divider">/</span> PERSONAL ARCADE</p>
+            <h1 id="page-title">Bob’s<br /><span>Adventure.</span></h1>
+            <p class="intro-description">Run, jump, and find your way home through 25 Indonesian-inspired levels. Then take a quick break with 26 original arcade games.</p>
+            <a class="limaraya-cta" href="https://limaraya.com/">
+              <span class="cta-copy"><span class="cta-kicker">MUSIC, STORIES & OTHER THINGS I MAKE</span><span class="cta-title">Find me at Limaraya.com</span></span>
+              <span class="cta-arrow"><ArrowUpRight aria-hidden="true" /></span>
+            </a>
           </div>
-          <a class="limaraya-cta" href="https://limaraya.com/" aria-label="Visit Limaraya dot com, the main planet">
-            <span class="cta-orbit-mark" aria-hidden="true">L</span>
-            <span class="cta-copy"><span class="cta-kicker">THE BRIGHTEST PLANET</span><span class="cta-title">Visit Limaraya</span><span class="cta-url">limaraya.com</span></span>
-            <ArrowUpRight class="cta-arrow" aria-hidden="true" />
-          </a>
+
+          <article class="hero-feature" aria-label={`Featured game: ${featuredGame.name}`}>
+            <div class="hero-feature-art" aria-hidden="true" set:html={gameCoverArt(featuredGame)}></div>
+            <div class="hero-feature-caption">
+              <div class="feature-copy">
+                <span class="feature-kicker">FLAGSHIP PLATFORMER <span>25 LEVELS</span></span>
+                <h2>Find the way home</h2>
+              </div>
+              <button class="feature-play" type="button" data-feature-game={featuredGame.id}>
+                PLAY <ArrowUpRight aria-hidden="true" />
+              </button>
+            </div>
+          </article>
         </section>
 
-        <nav class="surface-tabs" id="surface-tabs" role="tablist" aria-label="Choose a view">
-          <button id="tab-orbit" class="surface-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-orbit" data-view="orbit">01 <span>THE ORBIT</span></button>
-          <button id="tab-arcade" class="surface-tab" type="button" role="tab" aria-selected="false" aria-controls="panel-arcade" data-view="arcade">02 <span>THE ARCADE</span></button>
-        </nav>
+        <section id="social" class="social-section" aria-labelledby="social-title">
+          <div class="social-heading">
+            <p class="section-kicker">SAY HELLO</p>
+            <h2 id="social-title">Elsewhere<span>.</span></h2>
+          </div>
+          <div class="social-links">
+            {socialLinks.map((social) => (
+              <a
+                class="social-link"
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${social.name}, ${social.handle} (opens in a new tab)`}
+              >
+                <span class="social-icon" style={`--social-accent:${social.accent};`} aria-hidden="true">
+                  {social.icon ? <svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d={social.icon.path} /></svg> : <span>in</span>}
+                </span>
+                <span class="social-copy"><span class="social-name">{social.name}</span><span class="social-handle">{social.handle}</span></span>
+                <ArrowUpRight class="social-arrow" aria-hidden="true" />
+              </a>
+            ))}
+          </div>
+        </section>
 
-        <div class="experience-grid">
-          <section id="panel-orbit" class="system-panel panel-surface is-active" role="tabpanel" aria-labelledby="tab-orbit">
-            <div class="panel-heading">
-              <div><p class="panel-kicker">FOLLOW A PLANET</p><h2>My little corner of the internet</h2></div>
-              <span class="planet-count">06 WORLDS</span>
+        <section id="arcade" class="arcade-section" aria-labelledby="arcade-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker"><span class="section-mark" aria-hidden="true"></span> THE ARCADE <span>26 ORIGINAL GAMES</span></p>
+              <h2 id="arcade-title">Pick your next game<span>.</span></h2>
             </div>
+            <p class="section-intro">Built for short breaks. Stay for another round.</p>
+          </div>
 
-            <div class="solar-system" role="group" aria-label="Orbiting links to Limaraya and Bobby’s social profiles">
-              <span class="orbit-star orbit-star--one" aria-hidden="true">✦</span>
-              <span class="orbit-star orbit-star--two" aria-hidden="true">+</span>
-              <span class="orbit-star orbit-star--three" aria-hidden="true">·</span>
-
-              <div class="orbit-track orbit-track--limaraya">
-                <a class="planet-link planet-link--limaraya" href="https://limaraya.com/" aria-label="Visit Limaraya dot com, the main planet">
-                  <span class="planet-sphere planet-sphere--large" aria-hidden="true"><span class="planet-surface"></span><span class="planet-monogram planet-monogram--large">L</span></span>
-                  <span class="planet-label">LIMARAYA</span>
-                </a>
-              </div>
-
-              <div class="orbit-track orbit-track--socials">
-                {socialPlanets.map((planet) => (
-                  <a
-                    class="planet-link planet-link--social"
-                    style={"--planet-x:" + planet.x + ";--planet-y:" + planet.y + ";"}
-                    href={planet.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={planet.name + ", " + planet.handle + " (opens in a new tab)"}
-                    title={planet.name + " · " + planet.handle}
-                  >
-                    <span class="planet-sphere" aria-hidden="true">{planet.icon ? <svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d={planet.icon.path} /></svg> : <span class="planet-monogram">in</span>}</span>
-                    <span class="planet-label">{planet.name}</span>
-                  </a>
-                ))}
-              </div>
-
-              <div class="system-sun" aria-label="Bobby Fajar Christian, at the center of the solar system">
-                <span class="sun-core" aria-hidden="true">BFC</span>
-                <span class="sun-name">BOBBY</span>
+          <section id="game-player" class="game-player" aria-labelledby="selected-game-name">
+            <div class="game-brief">
+              <p class="panel-kicker"><span class="selection-led" aria-hidden="true"></span> ON THE SCREEN <span class="selection-index" id="arcade-status">LEVEL 01 / 25</span></p>
+              <h3 id="selected-game-name">{firstGame.name}</h3>
+              <p class="game-description" id="game-description">{firstGame.description}</p>
+              <div class="game-instructions">
+                <span class="instruction-label">CONTROLS</span>
+                <p class="keyboard-hint" id="controls-copy">{firstGame.controls} · Press ENTER to start</p>
               </div>
             </div>
-            <div class="panel-footnote"><span class="footnote-star" aria-hidden="true">✦</span><span>The planets keep moving. Pick one to visit.</span><span class="orbit-direction">BFC · ORBIT MAP</span></div>
-          </section>
 
-          <section id="panel-arcade" class="arcade-panel panel-surface" role="tabpanel" aria-labelledby="tab-arcade">
-            <div class="arcade-heading">
-              <div><p class="panel-kicker">POCKET ARCADE · A—Z</p><h2 id="selected-game-name">{firstGame.shortName}</h2></div>
-              <output class="arcade-status" id="arcade-status">A · 01 / 26</output>
-            </div>
-
-            <div class="game-picker-shell">
-              <button id="game-picker-prev" class="game-picker-step" type="button" aria-label="Previous game">‹</button>
-              <div class="game-picker" id="game-picker" role="group" aria-label="Choose one of 26 pocket games">
-              {games.map((game) => (
-                <button class="game-choice" type="button" data-game-select={game.id} data-game-letter={game.letter} aria-label={`Choose ${game.letter}: ${game.name}`} title={`${game.letter} · ${game.name}`} aria-pressed={game.id === firstGame.id ? "true" : "false"}>
-                  <span class="game-choice-letter" aria-hidden="true">{game.letter}</span>
-                </button>
-              ))}
-              </div>
-              <button id="game-picker-next" class="game-picker-step" type="button" aria-label="Next game">›</button>
-            </div>
-
-            <div class="game-description-row">
-              <p id="game-description">{firstGame.description}</p>
-              <a id="game-source" href={firstGame.sourceUrl} target="_blank" rel="noopener noreferrer">HISTORY ↗</a>
-            </div>
-
-            <div class="arcade-stage">
-              <div id="arcade-canvas" class="arcade-canvas" tabindex="0" role="img" aria-label="Monochrome arcade playfield. Use the game controls below to play."></div>
+            <div class="arcade-stage" id="arcade-stage" data-game-id={firstGame.id} style={`--stage-bg:${firstGame.palette.background};`}>
+              <div id="arcade-canvas" class="arcade-canvas" tabindex="0" role="img" aria-label="Pixel-art arcade playfield. Use the game controls below to play."></div>
               <div id="game-overlay" class="game-overlay" aria-live="polite">
-                <span class="overlay-kicker" id="overlay-kicker">READY PLAYER</span>
-                <p id="overlay-message">Choose a game, then press play.</p>
-                <button id="game-start" class="start-button" type="button"><span aria-hidden="true">▶</span> START GAME</button>
+                <span class="overlay-kicker" id="overlay-kicker">ORIGINAL GAME</span>
+                <h4 id="overlay-title">{firstGame.name}</h4>
+                <p id="overlay-message">{firstGame.description}</p>
+                <button id="game-start" class="start-button" type="button"><span aria-hidden="true">▶</span> PLAY</button>
               </div>
             </div>
 
             <div class="game-bottom-row">
-              <p class="keyboard-hint" id="controls-copy">Move ← → <span>·</span> Fire SPACE <span>·</span> Press ENTER to start</p>
+                <span class="arcade-note">NO DOWNLOAD NEEDED</span>
               <div class="touch-controls" role="group" aria-label="Arcade controls">
                 <button type="button" data-action="left" aria-label="Move or turn left">←</button>
-                <button type="button" data-action="up" aria-label="Move up or thrust">↑</button>
-                <button type="button" data-action="action" aria-label="Fire or confirm"><span id="action-label">FIRE</span></button>
-                <button type="button" data-action="down" aria-label="Move down">↓</button>
+                <button type="button" data-action="up" aria-label="Jump">↑</button>
+                <button type="button" data-action="action" aria-label="Jump"><span id="action-label">JUMP</span></button>
+                <button type="button" data-action="down" aria-label="Drop through a platform">↓</button>
                 <button type="button" data-action="right" aria-label="Move or turn right">→</button>
               </div>
-              <span class="pixel-note">NO COINS REQUIRED</span>
             </div>
             <button id="first-turn-toggle" class="first-turn-toggle" type="button" hidden>YOU MOVE FIRST</button>
           </section>
-        </div>
 
-        <p class="page-note"><span>© {new Date().getFullYear()} BOBBY FAJAR CHRISTIAN</span><span>MADE FOR A LITTLE PLAY <span aria-hidden="true">✦</span></span></p>
+          <div class="catalog-heading">
+            <h3>All 26 games</h3>
+            <p>Tap a cover to load it.</p>
+          </div>
+
+          <div class="game-picker" id="game-picker" role="group" aria-label="Choose from 26 original A-to-Z games">
+            {games.map((game) => (
+              <button class="game-choice" type="button" data-game-select={game.id} data-game-letter={game.letter} style={`--cover-bg:${game.palette.background};--cover-primary:${game.palette.primary};--cover-secondary:${game.palette.secondary};--cover-accent:${game.palette.accent};`} aria-label={`Play ${game.name}`} title={`${game.letter} · ${game.name}`} aria-pressed={game.id === firstGame.id ? "true" : "false"}>
+                <span class="game-art" data-art={game.art} aria-hidden="true" set:html={gameCoverArt(game)}></span>
+                <span class="game-choice-copy">
+                  <span class="game-choice-meta"><span>{game.letter}</span><span>{game.kind}</span></span>
+                  <span class="game-choice-name">{game.name}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <footer class="page-footer">
+          <a class="footer-name" href="#main">Bobby Fajar Christian</a>
+          <span>© {new Date().getFullYear()} <span class="footer-separator">/</span> MADE BY BOBBY</span>
+          <a class="footer-limaraya" href="https://limaraya.com/">VISIT LIMARAYA.COM <ArrowUpRight aria-hidden="true" /></a>
+        </footer>
       </main>
     </div>
 

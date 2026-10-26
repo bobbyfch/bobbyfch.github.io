@@ -1,5 +1,6 @@
 {
-  "name": "bobby-solar-system",
+  "name": "bobby-fajar-christian-arcade",
+  "description": "Bobby Fajar Christian’s arcade with Bob’s Adventure, a 25-level platformer, and 26 original games.",
   "private": true,
   "version": "1.0.0",
   "type": "module",

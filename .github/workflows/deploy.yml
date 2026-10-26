@@ -1,4 +1,4 @@
-name: Deploy Bobby Space Gate
+name: Deploy Bobby Pocket Arcade
 
 on:
   push:

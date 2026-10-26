@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" shape-rendering="crispEdges">
-  <rect x="1" y="1" width="46" height="46" fill="#f4f4f1" stroke="#171715" stroke-width="2"/>
-  <circle cx="24" cy="24" r="15" fill="#171715"/>
-  <ellipse cx="24" cy="24" rx="21" ry="8" fill="none" stroke="#171715" stroke-width="1.5" transform="rotate(-28 24 24)"/>
-  <circle cx="7" cy="15" r="2" fill="#171715"/>
-  <text x="24" y="27" fill="#f4f4f1" font-family="monospace" font-size="7" font-weight="700" text-anchor="middle">BFC</text>
+  <rect width="48" height="48" rx="10" fill="#354bd3"/>
+  <path d="M10 9h8v7h4v-4h4v4h4v-7h8v10h5v16h-7v5H12v-5H5V19h5z" fill="#f36f45"/>
+  <path d="M14 20h8v4h-4v8h-8v-8h4zm12 4v-4h8v4h4v8h-8v-8z" fill="#fff0c5"/>
+  <path d="M16 23h4v4h-4zm12 0h4v4h-4zm-7 8h6v4h-6z" fill="#1c263b"/>
+  <path d="M6 18h4v5H6zm32 0h4v5h-4z" fill="#ffdc69"/>
 </svg>
