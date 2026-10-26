@@ -1,4 +1,4 @@
-import type { GameId } from "./catalog";
+import { games, type GameId, type PocketFamily, type PocketGameId } from "./catalog";
 
 export type GamePhase = "ready" | "playing" | "won" | "over";
 export type GameAction = "left" | "right" | "up" | "down" | "action";
@@ -87,6 +87,38 @@ interface InvadersModel extends BaseModel {
   lives: number;
 }
 
+interface PocketObject {
+  x: number;
+  y: number;
+  kind: "hazard" | "target";
+  size: number;
+  drift: number;
+}
+
+interface PocketDot {
+  column: number;
+  row: number;
+  collected: boolean;
+}
+
+interface PocketModel extends BaseModel {
+  id: PocketGameId;
+  family: PocketFamily;
+  playerX: number;
+  playerY: number;
+  velocityY: number;
+  objects: PocketObject[];
+  bullets: Array<{ x: number; y: number }>;
+  dots: PocketDot[];
+  lives: number;
+  elapsed: number;
+  spawnClock: number;
+  moveClock: number;
+  fireClock: number;
+  marker: number;
+  markerDirection: number;
+}
+
 export type ArcadeModel =
   | CRTModel
   | BoardModel
@@ -95,7 +127,12 @@ export type ArcadeModel =
   | SpacewarModel
   | ComputerSpaceModel
   | PongModel
-  | InvadersModel;
+  | InvadersModel
+  | PocketModel;
+
+function isPocketModel(model: ArcadeModel): model is PocketModel {
+  return "family" in model;
+}
 
 const WIDTH = 640;
 const HEIGHT = 360;
@@ -282,6 +319,55 @@ function newInvaders(): InvadersModel {
   };
 }
 
+function mazeWall(column: number, row: number) {
+  if (column < 0 || column >= 16 || row < 0 || row >= 8) return true;
+  const walls = [
+    "................",
+    "..##....##......",
+    "................",
+    ".....##....##...",
+    "................",
+    "..##....##......",
+    "................",
+    "................",
+  ];
+  return walls[row]?.[column] === "#";
+}
+
+function newPocket(id: PocketGameId): PocketModel {
+  const definition = games.find((game) => game.id === id);
+  const family = definition?.family;
+  if (!family) throw new Error("The pocket game is missing its play style.");
+  const dots: PocketDot[] = [];
+  if (family === "maze") {
+    for (let row = 0; row < 8; row += 1) {
+      for (let column = 0; column < 16; column += 1) {
+        if (!mazeWall(column, row) && (column * 3 + row * 5) % 7 === 0 && !(column === 0 && row === 0)) {
+          dots.push({ column, row, collected: false });
+        }
+      }
+    }
+  }
+  return {
+    ...emptyState(id, "Ready when you are."),
+    id,
+    family,
+    playerX: family === "maze" ? 32 : WIDTH / 2,
+    playerY: family === "maze" ? 36 : 306,
+    velocityY: 0,
+    objects: [],
+    bullets: [],
+    dots,
+    lives: 3,
+    elapsed: 0,
+    spawnClock: 0,
+    moveClock: 0,
+    fireClock: 0,
+    marker: 0.08,
+    markerDirection: 1,
+  };
+}
+
 export function createModel(id: GameId, computerFirst = false): ArcadeModel {
   switch (id) {
     case "crt": return newCRT();
@@ -293,6 +379,7 @@ export function createModel(id: GameId, computerFirst = false): ArcadeModel {
     case "computer-space": return newComputerSpace();
     case "pong": return newPong();
     case "invaders": return newInvaders();
+    default: return newPocket(id);
   }
 }
 
@@ -332,6 +419,8 @@ export class ArcadeSimulation {
     if (this.model.id === "crt") {
       this.model.reticle.x = this.pointer.x;
       this.model.reticle.y = this.pointer.y;
+    } else if (isPocketModel(this.model) && this.model.family !== "maze" && this.model.family !== "timing") {
+      this.model.playerX = this.pointer.x;
     }
   }
 
@@ -369,6 +458,8 @@ export class ArcadeSimulation {
       const column = Math.floor((x - 130) / 126);
       const row = Math.floor((y - 48) / 88);
       if (column >= 0 && column < 3 && row >= 0 && row < 3) this.playBoardCell(row * 3 + column);
+    } else if (isPocketModel(model)) {
+      this.fireQueued = true;
     } else if (model.id === "crt" || model.id === "tennis" || model.id === "spacewar" || model.id === "computer-space" || model.id === "invaders") {
       this.fireQueued = true;
     }
@@ -524,8 +615,186 @@ export class ArcadeSimulation {
       this.updatePong(model, seconds, held);
     } else if (model.id === "invaders") {
       this.updateInvaders(model, seconds, delta, held);
+    } else if (isPocketModel(model)) {
+      this.updatePocket(model, seconds, delta, held);
     }
     this.fireQueued = false;
+  }
+
+  private updatePocket(model: PocketModel, seconds: number, delta: number, held: ActionSet) {
+    const { family } = model;
+    model.elapsed += delta;
+
+    if (family === "maze") {
+      model.moveClock -= delta;
+      if (model.moveClock <= 0) {
+        let column = Math.round((model.playerX - 32) / 36);
+        let row = Math.round((model.playerY - 36) / 36);
+        if (held.has("left")) column -= 1;
+        else if (held.has("right")) column += 1;
+        else if (held.has("up")) row -= 1;
+        else if (held.has("down")) row += 1;
+        if (!mazeWall(column, row)) {
+          model.playerX = 32 + column * 36;
+          model.playerY = 36 + row * 36;
+          const dot = model.dots.find((item) => !item.collected && item.column === column && item.row === row);
+          if (dot) {
+            dot.collected = true;
+            model.score += 1;
+            if (model.score >= 12) {
+              model.phase = "won";
+              model.message = "The maze is clear. Nice route.";
+            }
+          }
+        }
+        model.moveClock = 115;
+      }
+      return;
+    }
+
+    if (family === "timing") {
+      model.marker += model.markerDirection * seconds * 0.58;
+      if (model.marker >= 1) {
+        model.marker = 1;
+        model.markerDirection = -1;
+      } else if (model.marker <= 0) {
+        model.marker = 0;
+        model.markerDirection = 1;
+      }
+      model.fireClock -= delta;
+      if ((this.fireQueued || held.has("action")) && model.fireClock <= 0) {
+        model.fireClock = 270;
+        const tolerance = model.id === "word-rush" ? 0.14 : model.id === "yo-yo" ? 0.05 : 0.07;
+        if (model.marker >= 0.5 - tolerance && model.marker <= 0.5 + tolerance) {
+          model.score += 1;
+          model.message = "Right on the mark.";
+          if (model.score >= 8) {
+            model.phase = "won";
+            model.message = "Eight clean hits. Perfect timing.";
+          }
+        } else {
+          model.lives -= 1;
+          model.message = "Too soon. Watch the marker.";
+          if (model.lives <= 0) {
+            model.phase = "over";
+            model.message = "Three misses. Give it another go.";
+          }
+        }
+      }
+      return;
+    }
+
+    const horizontalSpeed = family === "jump" ? 245 : 280;
+    if (held.has("left")) model.playerX -= horizontalSpeed * seconds;
+    if (held.has("right")) model.playerX += horizontalSpeed * seconds;
+    model.playerX = Math.max(28, Math.min(WIDTH - 28, model.playerX));
+
+    if (family === "jump") {
+      const floor = HEIGHT - 48;
+      if ((held.has("up") || this.fireQueued || held.has("action")) && model.playerY >= floor - 1) {
+        model.velocityY = -370;
+      }
+      model.velocityY += 900 * seconds;
+      model.playerY = Math.min(floor, model.playerY + model.velocityY * seconds);
+      if (model.playerY >= floor) model.velocityY = 0;
+    }
+
+    model.spawnClock += delta;
+    const spawnDelay = family === "shoot" ? 960 : family === "jump" ? 1080 : 800;
+    if (model.spawnClock >= spawnDelay) {
+      model.spawnClock = 0;
+      const targetChance = family === "catch" ? 0.78 : family === "jump" ? 0.48 : 0;
+      model.objects.push({
+        x: 36 + Math.random() * (WIDTH - 72),
+        y: family === "jump" ? HEIGHT - 48 : -18,
+        kind: Math.random() < targetChance ? "target" : "hazard",
+        size: family === "dodge" && model.id === "laser-lane" ? 24 : family === "jump" ? 14 : 11,
+        drift: family === "jump" ? -(115 + Math.random() * 75) : 0,
+      });
+    }
+
+    if (family === "shoot") {
+      model.fireClock -= delta;
+      if ((this.fireQueued || held.has("action")) && model.fireClock <= 0) {
+        model.bullets.push({ x: model.playerX, y: model.playerY - 17 });
+        model.fireClock = 230;
+      }
+      model.bullets = model.bullets.filter((bullet) => {
+        bullet.y -= 330 * seconds;
+        return bullet.y > 0;
+      });
+    }
+
+    const nextObjects: PocketObject[] = [];
+    for (const object of model.objects) {
+      if (family === "jump") {
+        object.x += object.drift * seconds;
+      } else {
+        object.y += (family === "shoot" ? 92 : 112) * seconds;
+        object.x += object.drift * seconds;
+      }
+
+      if (family === "shoot" && object.kind === "hazard") {
+        const bulletIndex = model.bullets.findIndex((bullet) => Math.abs(bullet.x - object.x) < object.size + 4 && Math.abs(bullet.y - object.y) < object.size + 7);
+        if (bulletIndex >= 0) {
+          model.bullets.splice(bulletIndex, 1);
+          model.score += 1;
+          if (model.score >= 12) {
+            model.phase = "won";
+            model.message = "The sky is clear. Good shooting.";
+          }
+          continue;
+        }
+      }
+
+      const playerY = family === "jump" ? model.playerY : model.playerY;
+      const nearPlayer = Math.abs(object.x - model.playerX) < object.size + 19 && Math.abs(object.y - playerY) < object.size + 16;
+      if (nearPlayer) {
+        if (object.kind === "target" && family !== "shoot" && family !== "dodge") {
+          model.score += 1;
+          if (model.score >= 10) {
+            model.phase = "won";
+            model.message = "Bag full. Lovely catching.";
+          }
+        } else if (object.kind === "hazard" && model.elapsed > 500) {
+          model.lives -= 1;
+          model.message = "That was close. Keep moving.";
+          model.playerX = WIDTH / 2;
+          if (family === "jump") model.playerY = HEIGHT - 48;
+          if (model.lives <= 0) {
+            model.phase = "over";
+            model.message = "Three hits. Take another run.";
+          }
+        }
+        continue;
+      }
+
+      if (family === "catch" && object.kind === "target" && object.y > HEIGHT - 22) {
+        model.lives -= 1;
+        model.message = "One slipped by. Keep an eye out.";
+        if (model.lives <= 0) {
+          model.phase = "over";
+          model.message = "Three got away. Try once more.";
+        }
+        continue;
+      }
+      if (family === "shoot" && object.y > HEIGHT - 18) {
+        model.lives -= 1;
+        model.message = "A ship got through.";
+        if (model.lives <= 0) {
+          model.phase = "over";
+          model.message = "The fleet broke through. Try again.";
+        }
+        continue;
+      }
+      if ((family === "jump" && object.x < -24) || (family !== "jump" && object.y < HEIGHT + 24)) nextObjects.push(object);
+    }
+    model.objects = nextObjects;
+
+    if (family === "dodge" && model.elapsed >= 22000) {
+      model.phase = "won";
+      model.message = "Clean run. You made it through.";
+    }
   }
 
   private updateSpacewar(model: SpacewarModel, seconds: number, delta: number, held: ActionSet) {
@@ -771,6 +1040,11 @@ export class ArcadeSimulation {
 
   get status() {
     const model = this.model;
+    if (isPocketModel(model)) {
+      if (model.family === "maze") return "STARS " + String(model.score).padStart(2, "0") + " / 12";
+      if (model.family === "timing") return "HITS " + model.score + " / 8 · " + model.lives + " LIVES";
+      return "SCORE " + String(model.score).padStart(2, "0") + " · " + model.lives + " LIVES";
+    }
     if (model.id === "pong") return model.playerPoints + " — " + model.computerPoints + (model.serveDelay < 0 ? " · SERVE" : "");
     if (model.id === "invaders" || model.id === "spacewar" || model.id === "computer-space") {
       const lives = model.id === "invaders" ? model.lives : model.id === "spacewar" ? model.player.lives : model.ship.lives;

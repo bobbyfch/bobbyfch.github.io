@@ -10,6 +10,9 @@ const gameTitle = document.querySelector<HTMLElement>("#selected-game-name");
 const gameDescription = document.querySelector<HTMLElement>("#game-description");
 const gameSource = document.querySelector<HTMLAnchorElement>("#game-source");
 const gameStatus = document.querySelector<HTMLOutputElement>("#arcade-status");
+const gamePicker = document.querySelector<HTMLElement>("#game-picker");
+const previousGameButton = document.querySelector<HTMLButtonElement>("#game-picker-prev");
+const nextGameButton = document.querySelector<HTMLButtonElement>("#game-picker-next");
 const gameOverlay = document.querySelector<HTMLElement>("#game-overlay");
 const overlayKicker = document.querySelector<HTMLElement>("#overlay-kicker");
 const overlayMessage = document.querySelector<HTMLElement>("#overlay-message");
@@ -21,7 +24,7 @@ const actionLabel = document.querySelector<HTMLElement>("#action-label");
 
 let controller: ArcadeController | undefined;
 let booting: Promise<ArcadeController> | undefined;
-let selectedGame: GameId = "invaders";
+let selectedGame: GameId = games[0]?.id ?? "invaders";
 let computerFirst = false;
 
 function applyTheme(theme: "light" | "dark") {
@@ -81,20 +84,36 @@ function selectGame(id: GameId) {
   selectedGame = id;
   computerFirst = false;
   for (const button of gameButtons) button.setAttribute("aria-pressed", String(button.dataset.gameSelect === id));
+  const selectedButton = gameButtons.find((button) => button.dataset.gameSelect === id);
+  if (selectedButton && gamePicker) {
+    const target = selectedButton.offsetLeft + selectedButton.offsetWidth / 2 - gamePicker.clientWidth / 2;
+    gamePicker.scrollTo({ left: target, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
   if (gameTitle) gameTitle.textContent = definition.shortName;
   if (gameDescription) gameDescription.textContent = definition.description;
   if (gameSource) {
     gameSource.href = definition.sourceUrl;
     gameSource.setAttribute("aria-label", "Read historical background from " + definition.source);
+    gameSource.hidden = !definition.sourceUrl;
   }
   if (controlsCopy) controlsCopy.textContent = definition.controls + " · Press ENTER to start";
-  if (actionLabel) actionLabel.textContent = id === "pong" ? "SERVE" : id === "bertie" || id === "oxo" || id === "nimrod" ? "SELECT" : "FIRE";
+  if (actionLabel) {
+    actionLabel.textContent = id === "pong" ? "SERVE"
+      : id === "bertie" || id === "oxo" || id === "nimrod" ? "SELECT"
+        : definition.family === "timing" ? "HIT"
+          : definition.family === "jump" ? "JUMP"
+            : definition.family === "shoot" || id === "crt" || id === "spacewar" || id === "computer-space" || id === "invaders" ? "FIRE"
+              : definition.family === "catch" ? "CATCH" : "GO";
+  }
   if (firstTurnToggle) {
     firstTurnToggle.hidden = id !== "oxo";
     firstTurnToggle.textContent = "YOU MOVE FIRST";
     firstTurnToggle.setAttribute("aria-pressed", "false");
   }
-  if (gameStatus) gameStatus.textContent = definition.year + " · " + definition.kind;
+  if (gameStatus) {
+    const position = String(games.indexOf(definition) + 1).padStart(2, "0");
+    gameStatus.textContent = definition.letter + " · " + position + "/" + games.length + (definition.year === "ORIGINAL" ? " · POCKET" : " · " + definition.year);
+  }
   if (overlayKicker) overlayKicker.textContent = "A LITTLE ARCADE HISTORY";
   if (overlayMessage) overlayMessage.textContent = definition.description;
   if (gameOverlay) gameOverlay.hidden = false;
@@ -134,7 +153,28 @@ for (const button of gameButtons) {
     if (!id) return;
     selectGame(id);
   });
+  button.addEventListener("keydown", (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    const current = gameButtons.indexOf(button);
+    const next = event.key === "ArrowRight" ? (current + 1) % gameButtons.length : (current + gameButtons.length - 1) % gameButtons.length;
+    const nextButton = gameButtons[next];
+    const id = nextButton?.dataset.gameSelect as GameId | undefined;
+    if (nextButton && id) {
+      selectGame(id);
+      nextButton.focus();
+    }
+  });
 }
+
+function selectAdjacentGame(direction: -1 | 1) {
+  const current = games.findIndex((game) => game.id === selectedGame);
+  const next = games[(current + direction + games.length) % games.length];
+  if (next) selectGame(next.id);
+}
+
+previousGameButton?.addEventListener("click", () => selectAdjacentGame(-1));
+nextGameButton?.addEventListener("click", () => selectAdjacentGame(1));
 
 startButton?.addEventListener("click", async () => {
   startButton.disabled = true;

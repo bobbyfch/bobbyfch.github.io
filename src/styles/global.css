@@ -119,12 +119,14 @@ h1 span { font-family: var(--pixel-font); font-size: .82em; font-weight: 700; le
 .arcade-heading { flex: 0 0 auto; display: flex; align-items: end; justify-content: space-between; gap: 10px; }
 .arcade-heading h2 { margin: 4px 0 0; font: 700 clamp(12px, 1.25vw, 16px)/1.15 var(--pixel-font); letter-spacing: .035em; }
 .arcade-status { padding: 5px 7px; border: 1px solid var(--line); color: var(--muted); font: 700 8px/1 var(--pixel-font); letter-spacing: .05em; white-space: nowrap; }
-.game-picker { flex: 0 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
-.game-choice { min-width: 0; min-height: 33px; display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 5px 7px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease; }
+.game-picker-shell { flex: 0 0 auto; min-width: 0; display: flex; align-items: center; gap: 5px; }
+.game-picker { position: relative; flex: 1 1 auto; min-width: 0; display: flex; gap: 4px; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-color: var(--line-strong) transparent; scrollbar-width: thin; scroll-snap-type: x mandatory; }
+.game-picker-step { flex: 0 0 30px; width: 30px; min-height: 38px; border: 1px solid var(--line); background: transparent; color: var(--ink); font: 700 20px/1 var(--pixel-font); cursor: pointer; }
+.game-picker-step:hover { border-color: var(--ink); }
+.game-choice { flex: 0 0 38px; width: 38px; min-width: 38px; min-height: 38px; display: grid; place-items: center; padding: 0; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; scroll-snap-align: center; transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease; }
 .game-choice:hover { border-color: var(--ink); color: var(--ink); }
 .game-choice[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--paper); }
-.game-choice-name { overflow: hidden; font: 700 8px/1.1 var(--pixel-font); letter-spacing: .015em; text-overflow: ellipsis; white-space: nowrap; }
-.game-choice-year { flex: 0 0 auto; font: 700 7px/1 var(--pixel-font); opacity: .75; }
+.game-choice-letter { font: 700 13px/1 var(--pixel-font); }
 .game-description-row { flex: 0 0 auto; min-height: 25px; display: flex; align-items: center; gap: 10px; }
 .game-description-row p { flex: 1 1 auto; overflow: hidden; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .game-description-row a { flex: 0 0 auto; color: var(--ink); font: 700 7px/1 var(--pixel-font); letter-spacing: .06em; }
@@ -191,10 +193,11 @@ h1 span { font-family: var(--pixel-font); font-size: .82em; font-weight: 700; le
   .arcade-panel { gap: 6px; padding: 10px; }
   .arcade-heading h2 { font-size: 11px; }
   .arcade-status { font-size: 7px; }
-  .game-picker { gap: 3px; }
-  .game-choice { min-height: 30px; padding: 4px 5px; }
-  .game-choice-name { font-size: 7px; }
-  .game-choice-year { font-size: 6px; }
+  .game-picker-shell { gap: 4px; }
+  .game-picker { gap: 4px; }
+  .game-picker-step { flex-basis: 32px; width: 32px; min-height: 44px; }
+  .game-choice { flex-basis: 42px; width: 42px; min-width: 42px; min-height: 44px; }
+  .game-choice-letter { font-size: 14px; }
   .game-description-row { display: none; }
   .arcade-stage { min-height: 100px; }
   .game-overlay { gap: 5px; padding: 8px; }
@@ -245,7 +248,7 @@ h1 span { font-family: var(--pixel-font); font-size: .82em; font-weight: 700; le
   .intro-description { display: none; }
   .limaraya-cta { min-height: 55px; }
   .surface-tabs { flex-basis: 32px; margin-bottom: 5px; }
-  .game-choice { min-height: 27px; }
+  .game-choice { min-height: 44px; }
   .page-note { flex-basis: 18px; }
 }
 

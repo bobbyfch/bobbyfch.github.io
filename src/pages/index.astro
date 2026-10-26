@@ -3,6 +3,8 @@ import "../styles/global.css";
 import { ArrowUpRight, Moon, Sun } from "@lucide/astro";
 import { games } from "../games/catalog";
 import { socialPlanets } from "../games/socials";
+
+const firstGame = games[0]!;
 ---
 
 <!doctype html>
@@ -12,10 +14,10 @@ import { socialPlanets } from "../games/socials";
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#f7f7f5" />
     <meta name="author" content="Bobby Fajar Christian" />
-    <meta name="description" content="A monochrome solar system by Bobby Fajar Christian. Explore rotating social planets, play nine arcade-history games, and reach Limaraya.com." />
+    <meta name="description" content="A monochrome solar system by Bobby Fajar Christian. Explore rotating social planets, play 26 pocket arcade games from A to Z, and reach Limaraya.com." />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Bobby Fajar Christian · Solar System" />
-    <meta property="og:description" content="Rotating social planets, nine tiny arcade-history games, and one bright route to Limaraya.com." />
+    <meta property="og:description" content="Rotating social planets, 26 tiny arcade games from A to Z, and one bright route to Limaraya.com." />
     <meta property="og:url" content="https://bobbyfch.github.io/" />
     <meta property="og:site_name" content="Bobby Fajar Christian" />
     <meta name="twitter:card" content="summary" />
@@ -114,21 +116,25 @@ import { socialPlanets } from "../games/socials";
 
           <section id="panel-arcade" class="arcade-panel panel-surface" role="tabpanel" aria-labelledby="tab-arcade">
             <div class="arcade-heading">
-              <div><p class="panel-kicker">THE ARCADE · 1947—1978</p><h2 id="selected-game-name">SPACE INVADERS</h2></div>
-              <output class="arcade-status" id="arcade-status">READY</output>
+              <div><p class="panel-kicker">POCKET ARCADE · A—Z</p><h2 id="selected-game-name">{firstGame.shortName}</h2></div>
+              <output class="arcade-status" id="arcade-status">A · 01 / 26</output>
             </div>
 
-            <div class="game-picker" role="group" aria-label="Choose an arcade game">
+            <div class="game-picker-shell">
+              <button id="game-picker-prev" class="game-picker-step" type="button" aria-label="Previous game">‹</button>
+              <div class="game-picker" id="game-picker" role="group" aria-label="Choose one of 26 pocket games">
               {games.map((game) => (
-                <button class="game-choice" type="button" data-game-select={game.id} aria-pressed={game.id === "invaders" ? "true" : "false"}>
-                  <span class="game-choice-name">{game.shortName}</span><span class="game-choice-year">{game.year}</span>
+                <button class="game-choice" type="button" data-game-select={game.id} data-game-letter={game.letter} aria-label={`Choose ${game.letter}: ${game.name}`} title={`${game.letter} · ${game.name}`} aria-pressed={game.id === firstGame.id ? "true" : "false"}>
+                  <span class="game-choice-letter" aria-hidden="true">{game.letter}</span>
                 </button>
               ))}
+              </div>
+              <button id="game-picker-next" class="game-picker-step" type="button" aria-label="Next game">›</button>
             </div>
 
             <div class="game-description-row">
-              <p id="game-description">{games.find((game) => game.id === "invaders")?.description}</p>
-              <a id="game-source" href="https://taito.co.jp/en/corporate/about/history" target="_blank" rel="noopener noreferrer">HISTORY ↗</a>
+              <p id="game-description">{firstGame.description}</p>
+              <a id="game-source" href={firstGame.sourceUrl} target="_blank" rel="noopener noreferrer">HISTORY ↗</a>
             </div>
 
             <div class="arcade-stage">

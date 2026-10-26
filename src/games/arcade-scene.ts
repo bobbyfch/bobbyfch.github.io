@@ -10,6 +10,17 @@ const sprites = {
   bunker: ["..############..", ".##############.", "################", "################", "#######..#######", "######....######", "#####......#####"],
 };
 
+const pocketMazeWalls = [
+  "................",
+  "..##....##......",
+  "................",
+  ".....##....##...",
+  "................",
+  "..##....##......",
+  "................",
+  "................",
+];
+
 const starPoints = Array.from({ length: 68 }, (_, index) => ({
   x: (index * 97 + 31) % WORLD.width,
   y: (index * 61 + 19) % WORLD.height,
@@ -89,7 +100,112 @@ export class ArcadeScene extends Phaser.Scene {
       case "computer-space": this.drawComputerSpace(model); break;
       case "pong": this.drawPong(model); break;
       case "invaders": this.drawInvaders(model); break;
+      default: this.drawPocket(model); break;
     }
+  }
+
+  private drawPocket(model: Extract<ArcadeModel, { family: string }>) {
+    const g = this.graphics;
+    g.fillStyle(this.faint, 1);
+    g.fillRect(28, 38, 30, 2);
+    g.fillRect(WORLD.width - 58, 38, 30, 2);
+    g.lineStyle(1, this.faint, 0.8);
+    for (let life = 0; life < model.lives; life += 1) g.strokeRect(34 + life * 15, 48, 8, 8);
+
+    if (model.family === "maze") {
+      for (let row = 0; row < 8; row += 1) {
+        for (let column = 0; column < 16; column += 1) {
+          if (pocketMazeWalls[row]?.[column] === "#") {
+            g.fillStyle(this.faint, 1);
+            g.fillRect(33 + column * 36, 37 + row * 36, 34, 34);
+          }
+        }
+      }
+      g.fillStyle(this.ink, 1);
+      for (const dot of model.dots) {
+        if (!dot.collected) g.fillCircle(32 + dot.column * 36, 36 + dot.row * 36, 3);
+      }
+      g.fillStyle(this.ink, 1);
+      g.fillCircle(model.playerX, model.playerY, 10);
+      g.fillStyle(this.screen, 1);
+      g.fillCircle(model.playerX + 3, model.playerY - 2, 2);
+      return;
+    }
+
+    if (model.family === "timing") {
+      const left = 72;
+      const width = WORLD.width - 144;
+      const targetWidth = model.id === "word-rush" ? 0.28 : model.id === "yo-yo" ? 0.1 : 0.14;
+      g.lineStyle(2, this.ink, 1);
+      g.strokeRect(left, 163, width, 34);
+      g.lineStyle(1, this.faint, 1);
+      g.strokeRect(left + width * (0.5 - targetWidth / 2), 157, width * targetWidth, 46);
+      g.fillStyle(this.ink, 1);
+      g.fillRect(left + model.marker * width - 3, 155, 6, 50);
+      g.lineStyle(1, this.faint, 1);
+      for (let index = 1; index < 8; index += 1) g.lineBetween(left + index * width / 8, 164, left + index * width / 8, 196);
+      return;
+    }
+
+    g.lineStyle(1, this.faint, 0.8);
+    g.lineBetween(28, 326, WORLD.width - 28, 326);
+    for (const object of model.objects) {
+      if (object.kind === "target") {
+        g.fillStyle(this.ink, 1);
+        g.fillCircle(object.x, object.y, object.size * 0.48);
+        g.lineStyle(1, this.screen, 1);
+        g.strokeCircle(object.x, object.y, object.size * 0.72);
+      } else if (model.id === "laser-lane") {
+        g.fillStyle(this.ink, 1);
+        g.fillRect(object.x - 30, object.y - 3, 60, 6);
+        g.fillStyle(this.faint, 1);
+        g.fillRect(object.x - 33, object.y - 6, 4, 12);
+        g.fillRect(object.x + 29, object.y - 6, 4, 12);
+      } else {
+        g.fillStyle(this.ink, 1);
+        g.fillRect(object.x - object.size / 2, object.y - object.size / 2, object.size, object.size);
+      }
+    }
+
+    if (model.family === "shoot") {
+      g.lineStyle(2, this.ink, 1);
+      g.beginPath();
+      g.moveTo(model.playerX, model.playerY - 13);
+      g.lineTo(model.playerX - 13, model.playerY + 12);
+      g.lineTo(model.playerX + 13, model.playerY + 12);
+      g.closePath();
+      g.strokePath();
+      g.fillStyle(this.ink, 1);
+      for (const bullet of model.bullets) g.fillRect(bullet.x - 2, bullet.y - 5, 4, 10);
+    } else if (model.family === "jump") {
+      g.lineStyle(2, this.ink, 1);
+      g.strokeRect(model.playerX - 10, model.playerY - 14, 20, 24);
+      g.fillStyle(this.ink, 1);
+      g.fillRect(model.playerX - 13, model.playerY + 10, 8, 4);
+      g.fillRect(model.playerX + 5, model.playerY + 10, 8, 4);
+    } else if (model.family === "catch") {
+      g.lineStyle(3, this.ink, 1);
+      g.beginPath();
+      g.moveTo(model.playerX - 20, model.playerY - 4);
+      g.lineTo(model.playerX - 14, model.playerY + 12);
+      g.lineTo(model.playerX + 14, model.playerY + 12);
+      g.lineTo(model.playerX + 20, model.playerY - 4);
+      g.strokePath();
+      g.lineBetween(model.playerX - 20, model.playerY - 4, model.playerX + 20, model.playerY - 4);
+    } else {
+      g.lineStyle(2, this.ink, 1);
+      g.beginPath();
+      g.moveTo(model.playerX, model.playerY - 13);
+      g.lineTo(model.playerX - 12, model.playerY + 10);
+      g.lineTo(model.playerX + 12, model.playerY + 10);
+      g.closePath();
+      g.strokePath();
+    }
+
+    g.fillStyle(this.ink, 1);
+    g.fillRect(28, WORLD.height - 23, Math.max(4, (model.score / 12) * (WORLD.width - 56)), 3);
+    g.lineStyle(1, this.faint, 0.75);
+    g.strokeRect(28, WORLD.height - 23, WORLD.width - 56, 3);
   }
 
   private drawCRT(model: Extract<ArcadeModel, { id: "crt" }>) {
