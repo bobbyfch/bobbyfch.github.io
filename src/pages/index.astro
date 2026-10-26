@@ -1,0 +1,141 @@
+---
+import "../styles/global.css";
+import { ArrowUpRight, Moon, Sun } from "@lucide/astro";
+import { siGithub, siInstagram, siThreads, siYoutube } from "simple-icons";
+
+const socialPlanets = [
+  { name: "GitHub", handle: "@bobbyfch", href: "https://github.com/bobbyfch", icon: siGithub },
+  { name: "Instagram", handle: "@bobbyfch", href: "https://www.instagram.com/bobbyfch/", icon: siInstagram },
+  { name: "Threads", handle: "@bobby.fch", href: "https://www.threads.com/@bobby.fch", icon: siThreads },
+  { name: "LinkedIn", handle: "bobbyfajarc", href: "https://id.linkedin.com/in/bobbyfajarc", mark: "in" },
+  { name: "YouTube", handle: "Bobby Fajar Christian", href: "https://youtube.com/channel/UCZwduh5OJja1ShPWJ2KEcjA", icon: siYoutube },
+];
+---
+
+<!doctype html>
+<html lang="id" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f7f5" />
+    <meta name="author" content="Bobby Fajar Christian" />
+    <meta name="description" content="Main sebentar di arcade mini, lalu jelajahi planet sosial dan rumah musik Limaraya." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Bobby Fajar · Orbital Gate" />
+    <meta property="og:description" content="Arcade mini, planet sosial, dan satu gerbang besar menuju Limaraya." />
+    <meta property="og:url" content="https://bobbyfch.github.io/" />
+    <link rel="canonical" href="https://bobbyfch.github.io/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Bobby Fajar · Orbital Gate</title>
+    <script is:inline>
+      try {
+        const savedTheme = localStorage.getItem("bobby-space-theme");
+        const systemTheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = savedTheme === "dark" || savedTheme === "light" ? savedTheme : systemTheme;
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Langsung ke isi</a>
+
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="wordmark" href="#top" aria-label="Bobby Fajar, kembali ke atas">
+          <span class="wordmark-mark" aria-hidden="true">BF</span>
+          <span>BOBBY FAJAR <span class="wordmark-separator">/</span> PERSONAL ORBIT</span>
+        </a>
+        <div class="header-status"><span class="status-dot" aria-hidden="true"></span> SISTEM AKTIF · JAKARTA, ID</div>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Ganti ke tema gelap" aria-pressed="false">
+          <Sun class="theme-icon theme-icon--sun" aria-hidden="true" />
+          <Moon class="theme-icon theme-icon--moon" aria-hidden="true" />
+          <span class="sr-only">Ganti tema</span>
+        </button>
+      </header>
+
+      <main id="main">
+        <section id="top" class="intro" aria-labelledby="page-title">
+          <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> SEBUAH SUDUT KECIL DI INTERNET</p>
+          <h1 id="page-title">Halo, ini <span>orbitku.</span></h1>
+          <p class="intro-copy">Main sebentar, lalu pilih planet yang mau kamu kunjungi.<br class="desktop-break" /> Yang paling besar adalah rumah musik Limaraya.</p>
+        </section>
+
+        <section class="explorer" aria-label="Arcade dan planet tautan">
+          <article class="arcade" aria-labelledby="arcade-title">
+            <div class="arcade-topline">
+              <div class="arcade-brand"><span class="pixel-mark" aria-hidden="true">✦</span><div><h2 id="arcade-title">SPACE INVADERS</h2><p>MONOCHROME ARCADE · 001</p></div></div>
+              <span class="arcade-led"><span aria-hidden="true"></span> READY</span>
+            </div>
+
+            <div class="scoreboard" aria-label="Skor permainan">
+              <div><span>SKOR</span><output id="score">0000</output></div>
+              <div><span>REKOR</span><output id="best-score">0000</output></div>
+              <div><span>NYAWA</span><output id="lives">03</output></div>
+            </div>
+
+            <div class="screen-frame">
+              <canvas id="arcade-canvas" width="320" height="224" tabindex="0" aria-describedby="game-help" role="img" aria-label="Layar Space Invaders hitam putih. Tekan Mulai lalu gunakan tombol panah kiri dan kanan untuk bergerak, spasi untuk menembak."></canvas>
+            </div>
+            <p id="game-status" class="sr-only" aria-live="polite">Permainan siap dimulai.</p>
+
+            <div class="arcade-controls">
+              <button id="game-start" class="start-button" type="button"><span class="start-triangle" aria-hidden="true">▶</span> MULAI MAIN</button>
+              <p id="game-help" class="keyboard-hint">PANAH / A–D UNTUK GERAK <span aria-hidden="true">·</span> SPASI UNTUK TEMBAK</p>
+              <div class="touch-controls" role="group" aria-label="Kontrol permainan untuk layar sentuh">
+                <button type="button" data-control="left" aria-label="Gerak ke kiri">←</button>
+                <button type="button" data-control="fire" aria-label="Tembak">TEMBAK</button>
+                <button type="button" data-control="right" aria-label="Gerak ke kanan">→</button>
+              </div>
+            </div>
+          </article>
+
+          <aside class="planet-panel" aria-labelledby="planet-title">
+            <div class="planet-panel-heading">
+              <div><p class="panel-kicker">PILIH TUJUAN</p><h2 id="planet-title">Planet terdekat</h2></div>
+              <span class="planet-count">06 OBJEK</span>
+            </div>
+            <div class="orbit-map">
+              <span class="orbit-ring orbit-ring--outer" aria-hidden="true"></span>
+              <span class="orbit-ring orbit-ring--inner" aria-hidden="true"></span>
+              <span class="map-star map-star--one" aria-hidden="true">✦</span>
+              <span class="map-star map-star--two" aria-hidden="true">+</span>
+              <span class="map-star map-star--three" aria-hidden="true">·</span>
+
+              <a class="planet-link planet-link--limaraya" href="https://limaraya.com/" aria-label="Kunjungi Limaraya dot com, rumah musik Limaraya">
+                <span class="planet-sphere planet-sphere--large" aria-hidden="true"><span class="planet-surface"></span><span class="planet-orbit-mark">L</span></span>
+                <span class="planet-label">LIMARAYA</span>
+                <span class="planet-detail">limaraya.com <ArrowUpRight class="planet-arrow" aria-hidden="true" /></span>
+              </a>
+
+              {socialPlanets.map((planet, index) => (
+                <a class:list={["planet-link", "planet-link--social", `planet-link--${index + 1}`]} href={planet.href} target="_blank" rel="noreferrer noopener" aria-label={`${planet.name}, ${planet.handle} (buka tab baru)`}>
+                  <span class="planet-sphere" aria-hidden="true">{planet.icon ? <svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d={planet.icon.path} /></svg> : <span class="planet-monogram">{planet.mark}</span>}</span>
+                  <span class="planet-label">{planet.name}</span>
+                </a>
+              ))}
+            </div>
+            <p class="planet-caption"><span class="caption-star" aria-hidden="true">✦</span> Klik planet untuk berkunjung. Limaraya jadi tujuan utamamu.</p>
+          </aside>
+        </section>
+
+        <section class="closing-note" aria-label="Catatan">
+          <span class="closing-rule" aria-hidden="true"></span>
+          <p>Terima kasih sudah mampir. Sampai jumpa di orbit berikutnya.</p>
+          <span class="closing-coordinate">06°12′ S&nbsp; 106°49′ E</span>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>© {new Date().getFullYear()} BOBBY FAJAR CHRISTIAN</span>
+        <span class="footer-center">BUILT FOR A LITTLE PLAY</span>
+        <a href="https://limaraya.com/">MENUJU LIMARAYA <ArrowUpRight aria-hidden="true" /></a>
+      </footer>
+    </div>
+
+    <script>
+      import "../scripts/site.ts";
+      import "../scripts/invaders.ts";
+    </script>
+  </body>
+</html>

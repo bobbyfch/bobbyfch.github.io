@@ -1,0 +1,20 @@
+{
+  "name": "bobby-space-gate",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@lucide/astro": "^1.59.0",
+    "@tailwindcss/vite": "4.3.3",
+    "astro": "^7.4.0",
+    "tailwindcss": "4.3.3"
+  },
+  "devDependencies": {
+    "simple-icons": "16.35.0"
+  }
+}
