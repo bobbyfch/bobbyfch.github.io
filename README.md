@@ -2,7 +2,7 @@
 
 A small corner of the web for a longer adventure or a quick round. Explore **Bob’s Adventure**, a 25-level platform game set across Indonesian landscapes, then pick from **26 original arcade games**. When you’re done, head to [Limaraya.com](https://limaraya.com/) for Bobby’s music and stories.
 
-**[Play the arcade](https://bobbyfch.github.io/)** · **[Visit Limaraya.com](https://limaraya.com/)**
+**[Play the arcade](https://arcade.limaraya.com/)** · **[Visit Limaraya.com](https://limaraya.com/)**
 
 ## Inside the arcade
 
@@ -56,7 +56,7 @@ The site uses a warm paper background with cobalt, coral, mint, and yellow accen
 - [Tailwind CSS 4](https://tailwindcss.com/) through Vite for styling.
 - [Phaser](https://phaser.io/) for the interactive game canvas, loaded when play begins.
 - TypeScript for game rules, input, and site interactions.
-- GitHub Actions and GitHub Pages for build and deployment.
+- Cloudflare Workers Builds for build and deployment (GitHub is source control only).
 
 ## Run locally
 
@@ -73,7 +73,12 @@ Create the production build with:
 npm run build
 ```
 
-The static output is written to `dist/`. Pushing to `main` runs [the Pages workflow](.github/workflows/deploy.yml) and publishes the site at [bobbyfch.github.io](https://bobbyfch.github.io/).
+The static output is written to `dist/`. Push to `main` to trigger the **one** connected Cloudflare Workers Build. There are no GitHub Actions deploy workflows. The intended production URL is [arcade.limaraya.com](https://arcade.limaraya.com/); confirm the Worker and custom domain are active in Cloudflare before retiring the old live GitHub Pages site.
+
+## Cloudflare Workers Builds
+
+Configure a single Worker named `bobby-pocket-arcade` for repository `bobbyfch/bobbyfch.github.io` with production branch `main`, root `/`, build command `npm run build`, deploy command `npx wrangler deploy`, and Node.js 24. The checked-in `wrangler.jsonc` serves `dist/` and maps the intended custom domain `arcade.limaraya.com`. Do not create a duplicate Worker or an additional GitHub Actions deploy runner. Turn GitHub Pages off in repository settings only after a verified successful Worker deployment.
+
 
 ## Project map
 
