@@ -8,6 +8,11 @@
 
 ## Apple-first UI/UX execution contract — 18 Nov 2026
 
+### Mandatory flow-first UX contract (Apple HIG Patterns)
+
+Before implementing or refactoring any nontrivial UI interaction, identify: user goal and entry points; successful task path; alternate/error/offline/permission cases; Back/Cancel/Undo/Retry; loading/progress feedback; state ownership and data persistence; responsive navigation and focus restoration; keyboard/screen reader/TV remote equivalents; and observable success. Choose navigation/modal controls by **Apple HIG Patterns** and platform-native behavior, not visual resemblance. For small changes, use a one-line flow check rather than unnecessary diagrams. Test real interaction paths and report PASS/FAIL/NOT TESTED, not just screenshots. Follow section **03A — Flow Architecture** of the same [single Apple-first master standard](https://docs.google.com/document/d/1w-1h4fe4ttDmoWW9jMSWBS9QkA6nqgTRSsr1nOLGAGA/edit); no new companion documents or UI frameworks are required.
+
+
 Apply **Apple Human Interface Guidelines (HIG)** as the default grammar for every UI, navigation, layout, component and responsive task, without asking the owner to re-explain shapes, switches or layout. Keep existing branding, architecture, accessibility, security and native platform OS conventions. User's explicit different UI direction overrides this default for that task.
 
 - First inspect existing repo controls, CSS tokens, SDK, navigation, tests and constraints. Prefer reuse over new general UI kits.
